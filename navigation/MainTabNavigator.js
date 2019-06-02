@@ -45,11 +45,11 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: 'Sleep',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name={Platform.OS === 'ios' ? 'ios-moon' : 'md-moon'}
     />
   ),
 };
@@ -59,7 +59,7 @@ const FoodStack = createStackNavigator({
 });
 
 FoodStack.navigationOptions = {
-  tabBarLabel: 'Add Food Entry',
+  tabBarLabel: 'Food',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
