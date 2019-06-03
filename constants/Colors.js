@@ -17,5 +17,6 @@ export default {
   pink: '#EE3B64',
   lightPink: '#F5AFC2',
   green: '#7AA301',
-  darkGray: '#373737'
+  darkGray: '#373737',
+  baige: '#CCC9C9'
 };

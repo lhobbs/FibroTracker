@@ -7,9 +7,10 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FoodEntry from '../screens/FoodEntry';
+import FoodEntries from '../screens/FoodEntries';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: FoodEntries,
 });
 
 HomeStack.navigationOptions = {

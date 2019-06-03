@@ -2,6 +2,8 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import ActionButton from 'react-native-action-button'
+import Colors from './constants/Colors'
 
 export default class App extends React.Component {
   state = {
@@ -22,10 +24,37 @@ export default class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <AppNavigator />
+          {this.renderActionButton()}
         </View>
       );
     }
   }
+
+  renderActionButton() {
+        return ( 
+            <ActionButton buttonColor={Colors.teal} style={{marginBottom: 30}}>
+              <ActionButton.Item  
+                buttonColor={Colors.lightPink} 
+                title="New Food Entry" 
+                onPress={() => {this.props.navigation.navigate("FoodEntry")}}>
+                <Icon.Ionicons
+                  name='md-add'
+                  size={26}
+                  style={{ marginBottom: -3 }}
+                  color='#fff'
+                />
+                </ActionButton.Item>
+               <ActionButton.Item buttonColor={Colors.green} title="New Sleep Entry" onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+               <Icon.Ionicons
+                  name='md-add'
+                  size={26}
+                  style={{ marginBottom: -3 }}
+                  color='#fff'
+                />
+              </ActionButton.Item> 
+            </ActionButton>
+        );
+      }
 
   _loadResourcesAsync = async () => {
     return Promise.all([
