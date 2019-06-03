@@ -44,7 +44,7 @@ class FoodEntries extends React.Component {
       <ScrollView style={styles.container}>
         <FlatList
             data={this.state.entries}
-            renderItem={({item, index}) => <Text style={styles.label}>{item.name}</Text>}
+            renderItem={({item, index}) => <Text style={styles.listItem}>{item.name}</Text>}
             keyExtractor={(item, index) => index.toString()}
         />
       </ScrollView>
@@ -69,9 +69,12 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       padding: 10
   },
-  label: {
+  listItem: {
       fontSize: 20,
-      color: Colors.darkGray
+      color: Colors.darkGray,
+      padding: 10,
+      borderBottomWidth: 1,
+      borderColor: '#d6d7da',
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import vIcon from 'react-native-vector-icons';
 import AppNavigator from './navigation/AppNavigator';
 import ActionButton from 'react-native-action-button'
 import Colors from './constants/Colors'
@@ -34,23 +35,34 @@ export default class App extends React.Component {
         return ( 
             <ActionButton buttonColor={Colors.teal} style={{marginBottom: 30}}>
               <ActionButton.Item  
-                buttonColor={Colors.lightPink} 
-                title="New Food Entry" 
+                buttonColor='#FFF' 
                 onPress={() => {this.props.navigation.navigate("FoodEntry")}}>
-                <Icon.Ionicons
-                  name='md-add'
+                <vIcon.MaterialCommunityIcons
+                  name='food'
                   size={26}
                   style={{ marginBottom: -3 }}
-                  color='#fff'
+                  color={Colors.teal}
                 />
                 </ActionButton.Item>
-               <ActionButton.Item buttonColor={Colors.green} title="New Sleep Entry" onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
-               <Icon.Ionicons
-                  name='md-add'
-                  size={26}
-                  style={{ marginBottom: -3 }}
-                  color='#fff'
-                />
+               <ActionButton.Item 
+                  buttonColor='#FFF'
+                  onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+                  <vIcon.MaterialCommunityIcons
+                      name='pill'
+                      size={26}
+                      style={{ marginBottom: -3 }}
+                      color={Colors.teal}
+                  />
+              </ActionButton.Item>
+              <ActionButton.Item 
+                  buttonColor='#FFF'
+                  onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+                  <vIcon.MaterialCommunityIcons
+                      name='run'
+                      size={26}
+                      style={{ marginBottom: -3 }}
+                      color={Colors.teal}
+                  />
               </ActionButton.Item> 
             </ActionButton>
         );
