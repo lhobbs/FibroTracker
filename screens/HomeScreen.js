@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
+import Colors from '../constants/Colors';
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
@@ -101,7 +102,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.pink,
   },
   developmentModeText: {
     marginBottom: 20,

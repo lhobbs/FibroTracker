@@ -9,7 +9,8 @@ export function addFoodEntry(food) {
         body: JSON.stringify(food)
       }).then(function(response) {
           console.log('response', response)
-        return response.json();
+        // return response.json();
+        return response;
       })
       .catch(err => console.error(err));
 }

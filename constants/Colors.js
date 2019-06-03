@@ -1,7 +1,8 @@
-const tintColor = '#2f95dc';
+const tintColor = '#0C8A96';
 
 export default {
   tintColor,
+  trackColor: tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
   tabBar: '#fefefe',
@@ -11,4 +12,10 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  primaryBackground: '#0C8A96',
+  teal: '#0C8A96',
+  pink: '#EE3B64',
+  lightPink: '#F5AFC2',
+  green: '#7AA301',
+  darkGray: '#373737'
 };
