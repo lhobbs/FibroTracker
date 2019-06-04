@@ -7,16 +7,46 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TouchableHighlight,
+  Button
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { WebBrowser, Icon } from 'expo';
+import vIcon from 'react-native-vector-icons';
+import ActionButton from 'react-native-action-button'
 
 import Colors from '../constants/Colors';
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
+  static navigationOptions = ({ navigation }) => {
+    const {params = {}} = navigation.state;
+    return {
+      headerTitle: <Text style={{color: '#FFF', fontSize: 24}}>Fibro Tracker</Text>,
+      headerStyle:  {backgroundColor: Colors.pink},
+      headerLeft: 
+        (<TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
+          <Icon.Ionicons name='md-menu' color='#fff' size={30} />
+        </TouchableHighlight>)
+      //headerLeft: params.headerLeft
+    }
+    
   };
+
+  componentDidMount() {
+    // this._setNavigationParams();
+  }
+
+  // _setNavigationParams() {
+  //   let title       = 'Fibro Tracker';
+  //   let headerLeft = <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+  //        <Icon.Ionicons name='md-menu' color='blue' />
+  //      </TouchableOpacity>
+  
+  //   this.props.navigation.setParams({ 
+  //     title,
+  //     headerLeft
+  //   });
+  // }
 
   render() {
     return (
@@ -53,15 +83,45 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
+        {this.renderActionButton()}
       </View>
+    );
+  }
+
+  renderActionButton() {
+    return ( 
+        <ActionButton buttonColor={Colors.teal}>
+          <ActionButton.Item  
+            buttonColor='#FFF' 
+            onPress={() => {this.props.navigation.navigate("FoodEntry")}}>
+            <vIcon.MaterialCommunityIcons
+              name='food'
+              size={26}
+              style={{ marginBottom: -3 }}
+              color={Colors.teal}
+            />
+            </ActionButton.Item>
+           <ActionButton.Item 
+              buttonColor='#FFF'
+              onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+              <vIcon.MaterialCommunityIcons
+                  name='pill'
+                  size={26}
+                  style={{ marginBottom: -3 }}
+                  color={Colors.teal}
+              />
+          </ActionButton.Item>
+          <ActionButton.Item 
+              buttonColor='#FFF'
+              onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+              <vIcon.MaterialCommunityIcons
+                  name='run'
+                  size={26}
+                  style={{ marginBottom: -3 }}
+                  color={Colors.teal}
+              />
+          </ActionButton.Item> 
+        </ActionButton>
     );
   }
 
@@ -102,7 +162,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.pink,
+    backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,

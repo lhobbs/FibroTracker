@@ -16,6 +16,7 @@ class FoodEntry extends React.Component {
     
 
   static navigationOptions = ({ navigation }) => {
+      console.log('nav', navigation)
     const {params = {}} = navigation.state;
     // const {screenProps = {}} = navigation.getScreenProps()
     // console.log('screenprops', screenProps)
@@ -40,6 +41,7 @@ class FoodEntry extends React.Component {
 
   componentDidMount() {
     this._setNavigationParams()
+    this.props.navigation.openDrawer();
     // this.props.navigation.setParams({
     //     handleThis: this.saveFoodEntry
     // });
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    // backgroundColor: Colors.lightPink,
+    backgroundColor: '#fff'
   },
   optionsTitleText: {
     fontSize: 16,

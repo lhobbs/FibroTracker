@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -8,9 +8,10 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FoodEntry from '../screens/FoodEntry';
 import FoodEntries from '../screens/FoodEntries';
+import Menu from './DrawerMenu';
 
 const HomeStack = createStackNavigator({
-  Home: FoodEntries,
+  Home: HomeScreen,
 });
 
 HomeStack.navigationOptions = {
@@ -69,9 +70,20 @@ FoodStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
+// export default createBottomTabNavigator({
+//   HomeStack,
+//   LinksStack,
+//   SettingsStack,
+//   FoodStack
+// });
+
+export default createDrawerNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
   FoodStack
+},
+{
+  contentComponent: Menu,
+  drawerWidth: 300
 });
