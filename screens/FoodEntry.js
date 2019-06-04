@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, Picker, TouchableHighlight } from 'react-native';
-// import { ExpoLinksView } from '@expo/samples';
+import { Icon } from 'expo';
 import Slider from '@react-native-community/slider';
 // import Picker from 'react-native-roll-picker'
 import { addFoodEntry } from '../assets/scripts/service'
@@ -16,7 +16,7 @@ class FoodEntry extends React.Component {
     
 
   static navigationOptions = ({ navigation }) => {
-      console.log('nav', navigation)
+    //   console.log('nav', navigation)
     const {params = {}} = navigation.state;
     // const {screenProps = {}} = navigation.getScreenProps()
     // console.log('screenprops', screenProps)
@@ -24,6 +24,11 @@ class FoodEntry extends React.Component {
         title: params.title,
         headerRight: params.headerRight,
         headerStyle:  {backgroundColor: Colors.pink},
+        headerTintColor: '#fff',
+        // headerLeft: 
+        //   <TouchableHighlight onPress={() => navigation.goBack()} style={{padding: 10}}>
+        //     <Icon.Ionicons name='md-arrow-round-back' color='#fff' size={30} />
+        //   </TouchableHighlight>
     };
   }; 
 

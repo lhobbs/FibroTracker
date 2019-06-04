@@ -1,5 +1,6 @@
 import React from 'react';
-import { FlatList, Text, ScrollView, StyleSheet } from 'react-native';
+import { FlatList, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
+import { Icon } from 'expo';
 
 import { getFoodEntries } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
@@ -10,7 +11,6 @@ class FoodEntries extends React.Component {
         super(props);
         this.state = { entries: [] };
     }
-    
 
   static navigationOptions = ({ navigation }) => {
     const {params = {}} = navigation.state;
@@ -18,6 +18,11 @@ class FoodEntries extends React.Component {
         title: params.title,
         headerRight: params.headerRight,
         headerStyle:  {backgroundColor: Colors.pink},
+        headerTintColor: '#fff',
+        headerLeft: 
+          <TouchableHighlight onPress={() => navigation.navigate('Home')} style={{padding: 10}}>
+            <Icon.Ionicons name='md-home' color='#fff' size={30} />
+          </TouchableHighlight>
     };
   }; 
 

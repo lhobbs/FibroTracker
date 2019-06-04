@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator, createSwitchNavigator } from 'react-navigation';
+import Colors from '../constants/Colors';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -10,26 +11,26 @@ import FoodEntry from '../screens/FoodEntry';
 import FoodEntries from '../screens/FoodEntries';
 import Menu from './DrawerMenu';
 
+var defaultNavOptions = {
+  headerStyle: { backgroundColor: Colors.pink },
+  headerTintColor: '#FFF'
+}
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-analytics`
-          : 'md-analytics'
-      }
-    />
-  ),
-};
+// HomeStack.navigationOptions = {
+//   title: 'Fibro Tracker',
+//   // defaultNavOptions
+// };
 
 const LinksStack = createStackNavigator({
   Links: LinksScreen,
+}, {
+  navigationOptions: {
+    defaultNavOptions
+  }
 });
 
 // LinksStack.navigationOptions = {
@@ -46,15 +47,10 @@ const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Sleep',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-moon' : 'md-moon'}
-    />
-  ),
-};
+// SettingsStack.navigationOptions = {
+//   // defaultNavOptions,
+//   title: 'Settings'
+// };
 
 const FoodStack = createStackNavigator({
   Food: FoodEntries,
@@ -77,6 +73,12 @@ const FoodStack = createStackNavigator({
 //   SettingsStack,
 //   FoodStack
 // });
+var stack = createStackNavigator({
+  HomeStack,
+  LinksStack,
+  SettingsStack,
+  FoodStack
+})
 
 export default createDrawerNavigator({
   HomeStack,
@@ -84,7 +86,18 @@ export default createDrawerNavigator({
   SettingsStack,
   FoodStack
 },
-{
+{ 
   contentComponent: Menu,
-  drawerWidth: 300
+  drawerWidth: 300,
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {backgroundColor: 'orange'},
+    animationEnabled: true
+  }),
+  defaultHeaderStyle: {backgroundColor: 'blue'}
+  // navigationOptions: {
+  //   headerStyle: {backgroundColor: 'orange'}
+  // },
+  // defaultNavigationOptions: {
+  //   headerStyle: {backgroundColor: 'orange'}
+  // }
 });
