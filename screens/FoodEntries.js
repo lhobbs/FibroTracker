@@ -3,6 +3,7 @@ import { FlatList, Text, ScrollView, StyleSheet, TouchableHighlight, View, Secti
 import { Icon } from 'expo';
 import vIcon from 'react-native-vector-icons';
 import { Right } from 'native-base';
+import ActionButton from 'react-native-action-button'
 
 import { getFoodEntries } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
@@ -28,9 +29,14 @@ class FoodEntries extends React.Component {
     };
   }; 
 
+  componentWillMount() {
+    this._loadFoodEntries();
+    console.log('loaded food entries')
+  }
+
   componentDidMount() {
     this._setNavigationParams()
-    this._loadFoodEntries()
+    // this._loadFoodEntries()
  }
 
  _setNavigationParams() {
@@ -48,13 +54,16 @@ class FoodEntries extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <FlatList
-            data={this.state.entries}
-            renderItem={({item, index}) => this.renderListItem(item) }
-            keyExtractor={(item, index) => index.toString()}
-        />
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView style={styles.container}>
+          <FlatList
+              data={this.state.entries}
+              renderItem={({item, index}) => this.renderListItem(item) }
+              keyExtractor={(item, index) => index.toString()}
+          />
+        </ScrollView>
+        {this.renderActionButton()}
+      </View>
     );
   }
 
@@ -73,13 +82,19 @@ class FoodEntries extends React.Component {
       </View>
     )
   }
+
+  renderActionButton() {
+    return ( 
+        <ActionButton buttonColor={Colors.teal} onPress={() => this.props.navigation.navigate('AddFood') }></ActionButton>
+    );
+  }
   
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    // paddingTop: 15,
     // backgroundColor: Colors.lightPink,
   },
   optionsTitleText: {

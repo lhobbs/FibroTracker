@@ -8,36 +8,21 @@ import Colors from '../constants/Colors';
 
 
 class FoodEntry extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { food: '', caffeine: false, gluten: true, highSugar: false, chewiness: 2 };
-    // }
-    state = { food: '', caffeine: false, gluten: true, highSugar: false, chewiness: 2 };
+    state = { food: '', caffeine: false, gluten: true, highSugar: false, chewiness: 0 };
     
 
   static navigationOptions = ({ navigation }) => {
-    //   console.log('nav', navigation)
     const {params = {}} = navigation.state;
-    // const {screenProps = {}} = navigation.getScreenProps()
-    // console.log('screenprops', screenProps)
     return {
         title: params.title,
         headerRight: params.headerRight,
         headerStyle:  {backgroundColor: Colors.pink},
         headerTintColor: '#fff',
-        // headerLeft: 
-        //   <TouchableHighlight onPress={() => navigation.goBack()} style={{padding: 10}}>
-        //     <Icon.Ionicons name='md-arrow-round-back' color='#fff' size={30} />
-        //   </TouchableHighlight>
     };
   }; 
 
   componentDidMount() {
     this._setNavigationParams()
-    // this.props.navigation.openDrawer();
-    // this.props.navigation.setParams({
-    //     handleThis: this.saveFoodEntry
-    // });
  }
 
  _setNavigationParams() {
@@ -53,15 +38,15 @@ class FoodEntry extends React.Component {
     });
   }
 
-  _saveFoodEntry() {
+  async _saveFoodEntry() {
       const food = { name: this.state.food, 
         caffeine: this.state.caffeine, 
         gluten: this.state.gluten, 
         highSugar: this.state.highSugar, 
         chewiness: this.state.chewiness
      }
-     console.log('food', food)
-      addFoodEntry(food)
+     await addFoodEntry(food)
+      this.props.navigation.navigate('Food')
   }
 
   render() {
@@ -130,12 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff'
-  },
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 15,
-    marginTop: 9,
-    marginBottom: 12,
   },
   row: {
       flexDirection: 'row',
