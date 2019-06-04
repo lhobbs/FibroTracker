@@ -25,23 +25,11 @@ class FoodEntry extends React.Component {
         headerRight: params.headerRight,
         headerStyle:  {backgroundColor: Colors.pink},
     };
-
-    // headerRight: 
-    //     <Button
-    //         onPress={() => {
-    //         addFoodEntry({ name: params.food, 
-    //                         caffeine: screenProps.caffeine, 
-    //                         gluten: screenProps.gluten, 
-    //                         highSugar: screenProps.highSugar, 
-    //                         chewiness: screenProps.chewiness})
-    //         }}
-    //         title="Save"
-    //     />
   }; 
 
   componentDidMount() {
     this._setNavigationParams()
-    this.props.navigation.openDrawer();
+    // this.props.navigation.openDrawer();
     // this.props.navigation.setParams({
     //     handleThis: this.saveFoodEntry
     // });

@@ -11,20 +11,21 @@ class Menu extends Component {
       routeName: route
     });
     this.props.navigation.dispatch(navigateAction);
+    this.props.navigation.closeDrawer();
   }
 
   render () {
     return (
       <View style={styles.container}>
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('FoodEntries')}>
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Food')}>
             <Text style={styles.listItem}>
-              Food Entries
+              Food
             </Text>
           </TouchableHighlight>
           
-          <TouchableHighlight onPress={() => this.navigateToScreen('FoodEntries')}>
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')}>
             <Text style={styles.listItem}>
-              Sleep Entries
+              Sleep
             </Text>
           </TouchableHighlight>
       </View>

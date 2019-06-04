@@ -32,15 +32,15 @@ const LinksStack = createStackNavigator({
   Links: LinksScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Pain Areas',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-body' : 'md-body'}
-    />
-  ),
-};
+// LinksStack.navigationOptions = {
+//   tabBarLabel: 'Pain Areas',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon
+//       focused={focused}
+//       name={Platform.OS === 'ios' ? 'ios-body' : 'md-body'}
+//     />
+//   ),
+// };
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
@@ -57,18 +57,19 @@ SettingsStack.navigationOptions = {
 };
 
 const FoodStack = createStackNavigator({
-  Food: FoodEntry,
+  Food: FoodEntries,
+  AddFood: FoodEntry,
 });
 
-FoodStack.navigationOptions = {
-  tabBarLabel: 'Food',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-cafe' : 'md-cafe'}
-    />
-  ),
-};
+// FoodStack.navigationOptions = {
+//   tabBarLabel: 'Food',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon
+//       focused={focused}
+//       name={Platform.OS === 'ios' ? 'ios-cafe' : 'md-cafe'}
+//     />
+//   ),
+// };
 
 // export default createBottomTabNavigator({
 //   HomeStack,

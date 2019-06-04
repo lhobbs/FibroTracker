@@ -93,7 +93,7 @@ export default class HomeScreen extends React.Component {
         <ActionButton buttonColor={Colors.teal}>
           <ActionButton.Item  
             buttonColor='#FFF' 
-            onPress={() => {this.props.navigation.navigate("FoodEntry")}}>
+            onPress={() => {this.props.navigation.navigate("AddFood")}}>
             <vIcon.MaterialCommunityIcons
               name='food'
               size={26}
@@ -103,7 +103,7 @@ export default class HomeScreen extends React.Component {
             </ActionButton.Item>
            <ActionButton.Item 
               buttonColor='#FFF'
-              onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+              onPress={() => {this.props.navigation.navigate("Links")}}>
               <vIcon.MaterialCommunityIcons
                   name='pill'
                   size={26}
