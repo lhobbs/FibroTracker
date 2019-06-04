@@ -1,6 +1,8 @@
 import React from 'react';
-import { FlatList, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
+import { FlatList, Text, ScrollView, StyleSheet, TouchableHighlight, View, SectionList } from 'react-native';
 import { Icon } from 'expo';
+import vIcon from 'react-native-vector-icons';
+import { Right } from 'native-base';
 
 import { getFoodEntries } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
@@ -49,11 +51,27 @@ class FoodEntries extends React.Component {
       <ScrollView style={styles.container}>
         <FlatList
             data={this.state.entries}
-            renderItem={({item, index}) => <Text style={styles.listItem}>{item.name}</Text>}
+            renderItem={({item, index}) => this.renderListItem(item) }
             keyExtractor={(item, index) => index.toString()}
         />
       </ScrollView>
     );
+  }
+
+  renderListItem(item) {
+    return (
+      <View style={styles.listItem}> 
+        <Text style={styles.label}>{item.name}</Text>
+          <Right>
+            <View style={{flexDirection: 'row'}}>
+            {item.caffeine ? <Icon.Ionicons name="md-cafe" style={{color: Colors.lightPink}} size={26} /> : null}
+            {item.gluten ? <vIcon.MaterialCommunityIcons name='corn' size={26} color={Colors.lightPink} /> : null}
+            {item.highSugar ? <vIcon.MaterialCommunityIcons name='candycane' size={26} color={Colors.lightPink} /> : null}
+            {item.chewiness > 0 ? <vIcon.MaterialCommunityIcons name={item.chewiness == 1 ? 'tooth-outline': 'tooth'} size={26} color={Colors.lightPink} /> : null}
+            </View>
+          </Right>
+      </View>
+    )
   }
   
 }
@@ -80,7 +98,12 @@ const styles = StyleSheet.create({
       padding: 10,
       borderBottomWidth: 1,
       borderColor: '#d6d7da',
+      flexDirection: 'row'
   },
+  label: {
+    fontSize: 20,
+    color: Colors.darkGray
+}
 });
 
 export default FoodEntries

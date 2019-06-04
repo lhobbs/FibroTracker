@@ -4,7 +4,7 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
+  // Text,
   TouchableOpacity,
   View,
   TouchableHighlight,
@@ -13,9 +13,11 @@ import {
 import { WebBrowser, Icon } from 'expo';
 import vIcon from 'react-native-vector-icons';
 import ActionButton from 'react-native-action-button'
+import { Container, Header, Content, Card, CardItem, Text } from 'native-base';
 
 import Colors from '../constants/Colors';
 import { MonoText } from '../components/StyledText';
+// import Card from '../components/Card'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -27,60 +29,32 @@ export default class HomeScreen extends React.Component {
         (<TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
           <Icon.Ionicons name='md-menu' color='#fff' size={30} />
         </TouchableHighlight>)
-      //headerLeft: params.headerLeft
     }
     
   };
-
-  componentDidMount() {
-    // this._setNavigationParams();
-  }
-
-  // _setNavigationParams() {
-  //   let title       = 'Fibro Tracker';
-  //   let headerLeft = <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-  //        <Icon.Ionicons name='md-menu' color='blue' />
-  //      </TouchableOpacity>
-  
-  //   this.props.navigation.setParams({ 
-  //     title,
-  //     headerLeft
-  //   });
-  // }
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Hello, me
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
+          <View style={styles.row}>
+            <Card style={styles.card}>
+              <CardItem header>
+                <Text style={styles.subHeader}>Today's Pain Level</Text>
+              </CardItem>
+              <CardItem style={{ alignSelf: "center" }}>
+                <Text style={styles.largeText}>4</Text>
+              </CardItem>
+              
+            </Card>
+            <Card style={styles.cardInverse}>
+              <CardItem header style={{backgroundColor: Colors.pink}}>
+                <Text style={styles.subHeader}>Hours Slept Last Night</Text>
+              </CardItem>
+              <CardItem style={{ alignSelf: "center", backgroundColor: Colors.pink }}>
+                <Text style={[styles.largeText, {color: '#FFF'}]}>6</Text>
+              </CardItem>
+            </Card>
           </View>
         </ScrollView>
         {this.renderActionButton()}
@@ -121,42 +95,20 @@ export default class HomeScreen extends React.Component {
                   color={Colors.teal}
               />
           </ActionButton.Item> 
+          <ActionButton.Item 
+              buttonColor='#FFF'
+              onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+              <vIcon.MaterialCommunityIcons
+                  name='speedometer'
+                  size={26}
+                  style={{ marginBottom: -3 }}
+                  color={Colors.teal}
+              />
+          </ActionButton.Item>
         </ActionButton>
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
@@ -246,4 +198,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  largeText: {
+    fontSize: 50,
+    color: Colors.pink,
+    textAlign: 'center'
+  },
+  subHeader: {
+    color: Colors.darkGray,
+    textAlign: 'center',
+    alignSelf: 'center'
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 10
+  },
+  card: {
+    // width: '100%'
+    flex: 2,
+  },
+  cardInverse: {
+    flex: 2,
+    backgroundColor: Colors.pink,
+  }
 });
