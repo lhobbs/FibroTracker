@@ -8,18 +8,46 @@ import {
   TouchableOpacity,
   View,
   TouchableHighlight,
-  Button
+  Button, Dimensions
 } from 'react-native';
 import { WebBrowser, Icon } from 'expo';
 import vIcon from 'react-native-vector-icons';
 import ActionButton from 'react-native-action-button'
 import { Container, Header, Content, Card, CardItem, Text } from 'native-base';
+import { LineChart } from 'react-native-chart-kit';
+// import { LineChart } from 'react-native-charts-wrapper';
 
 import Colors from '../constants/Colors';
 import { MonoText } from '../components/StyledText';
 // import Card from '../components/Card'
 
 export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      painWeekData : {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        datasets: [{
+          data: [ 4, 4, 3, 4, 3, 2, 3 ],
+          color: (opacity = 1) => Colors.pink,//`rgba(134, 65, 244, ${opacity})`, // optional
+          strokeWidth: 2 // optional
+        }]
+      },
+      chartConfig : {
+        backgroundGradientFrom: '#FFF',
+        backgroundGradientTo: '#FFF',
+        color: (opacity = 1) => Colors.teal, //`rgba(26, 255, 146, ${opacity})`,
+        strokeWidth: 2, // optional, default 3
+        decimalPlaces: 1,
+        style: {
+          padding: 0 
+        }
+      },
+      screenWidth: Dimensions.get('window').width - 50
+    }; 
+}
+  
+
   static navigationOptions = ({ navigation }) => {
     const {params = {}} = navigation.state;
     return {
@@ -38,23 +66,44 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.row}>
-            <Card style={styles.card}>
-              <CardItem header>
-                <Text style={styles.subHeader}>Today's Pain Level</Text>
-              </CardItem>
-              <CardItem style={{ alignSelf: "center" }}>
-                <Text style={styles.largeText}>4</Text>
-              </CardItem>
-              
-            </Card>
             <Card style={styles.cardInverse}>
               <CardItem header style={{backgroundColor: Colors.pink}}>
-                <Text style={styles.subHeader}>Hours Slept Last Night</Text>
+                <Text style={styles.subHeader}>Today's Pain Level</Text>
               </CardItem>
               <CardItem style={{ alignSelf: "center", backgroundColor: Colors.pink }}>
-                <Text style={[styles.largeText, {color: '#FFF'}]}>6</Text>
+                <Text style={[styles.largeText, {color: '#FFF'}]}>4</Text>
               </CardItem>
             </Card>
+
+            <Card style={styles.card}>
+              <CardItem header>
+                <Text style={styles.subHeader}>Hours Slept Last Night</Text>
+              </CardItem>
+              <CardItem style={{ alignSelf: "center" }}>
+                <Text style={styles.largeText}>6</Text>
+              </CardItem>
+            </Card>
+          </View>
+
+          <View style={styles.row}>
+            <Card style={[styles.card, {padding: 0}]}>
+              <CardItem header>
+                <Text style={styles.subHeader}>Current Week Pain</Text>
+              </CardItem>
+              <CardItem style={{padding: 0}}>
+              <LineChart
+                data={this.state.painWeekData}
+                width={this.state.screenWidth}
+                height={this.state.screenWidth}
+                fromZero={true}
+                withInnerLines={false}
+                withDots={false}
+                chartConfig={this.state.chartConfig}
+                
+              />
+              </CardItem>
+            </Card>
+            
           </View>
         </ScrollView>
         {this.renderActionButton()}
@@ -116,87 +165,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
   contentContainer: {
     paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
   },
   largeText: {
     fontSize: 50,

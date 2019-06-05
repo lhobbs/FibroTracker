@@ -11,5 +11,6 @@ export default createAppContainer(
 //   Main: MainTabNavigator,
 // })
 // createDrawerNavigator( DrawerNavigation ) 
-MainTabNavigator
+// MainTabNavigator
+DrawerNavigation
 ); 

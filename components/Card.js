@@ -28,7 +28,7 @@ class Card2 extends Component {
     render() {
         return <Card>
                     <CardItem>
-                    {/* <Body> */}
+                        
                         <Text color='black'>
                             Hello here is some text. I'm trying to make some cards. Will this text display?
                         </Text>
