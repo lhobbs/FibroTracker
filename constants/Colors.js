@@ -16,6 +16,8 @@ export default {
   teal: '#0C8A96',
   pink: '#EE3B64',
   lightPink: '#F5AFC2',
+  lightPink2: '#F0849D',
+  darkPink: '#BA2F4F',
   green: '#7AA301',
   darkGray: '#373737',
   baige: '#CCC9C9'

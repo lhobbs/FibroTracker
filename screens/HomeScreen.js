@@ -16,7 +16,7 @@ import ActionButton from 'react-native-action-button'
 import { Container, Header, Content, Card, CardItem, Text } from 'native-base';
 import { LineChart } from 'react-native-chart-kit';
 // import { LineChart } from 'react-native-charts-wrapper';
-
+import moment from 'moment';
 import Colors from '../constants/Colors';
 import { MonoText } from '../components/StyledText';
 // import Card from '../components/Card'
@@ -26,12 +26,23 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       painWeekData : {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        labels: [], // ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
-          data: [ 4, 4, 3, 4, 3, 2, 3 ],
+          data: [ 4, 4, 3, 4, 5, 2, 3 ],
           color: (opacity = 1) => Colors.pink,//`rgba(134, 65, 244, ${opacity})`, // optional
           strokeWidth: 2 // optional
-        }]
+        },
+        // {
+        //   data: [ 3, 4, 4, 4, 4, 3, 3 ],
+        //   color: (opacity = 1) => Colors.lightPink2,//`rgba(134, 65, 244, ${opacity})`, // optional
+        //   strokeWidth: 1 // optional
+        // },
+        // {
+        //   data: [ 4, 3, 4, 2, 4, 5, 3 ],
+        //   color: (opacity = 1) => Colors.darkPink,//`rgba(134, 65, 244, ${opacity})`, // optional
+        //   strokeWidth: 1 // optional
+        // }
+      ]
       },
       chartConfig : {
         backgroundGradientFrom: '#FFF',
@@ -40,7 +51,8 @@ export default class HomeScreen extends React.Component {
         strokeWidth: 2, // optional, default 3
         decimalPlaces: 1,
         style: {
-          padding: 0 
+          padding: 0,
+          margin: 0
         }
       },
       screenWidth: Dimensions.get('window').width - 50
@@ -90,17 +102,16 @@ export default class HomeScreen extends React.Component {
               <CardItem header>
                 <Text style={styles.subHeader}>Current Week Pain</Text>
               </CardItem>
-              <CardItem style={{padding: 0}}>
-              <LineChart
-                data={this.state.painWeekData}
-                width={this.state.screenWidth}
-                height={this.state.screenWidth}
-                fromZero={true}
-                withInnerLines={false}
-                withDots={false}
-                chartConfig={this.state.chartConfig}
-                
-              />
+              <CardItem style={{padding: 0, margin: 0}}>
+                <LineChart
+                  data={this.state.painWeekData}
+                  width={this.state.screenWidth}
+                  height={this.state.screenWidth}
+                  fromZero={true}
+                  withInnerLines={false}
+                  withDots={true}
+                  chartConfig={this.state.chartConfig}
+                />
               </CardItem>
             </Card>
             
@@ -156,6 +167,13 @@ export default class HomeScreen extends React.Component {
           </ActionButton.Item>
         </ActionButton>
     );
+  }
+
+  componentWillMount() {
+    for(let i = -6; i < 1; i++) {
+      var date = moment().add(i, 'day')
+      this.state.painWeekData.labels.push(date.format('dd'))
+    }
   }
 
 }
