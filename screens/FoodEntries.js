@@ -8,12 +8,16 @@ import ActionButton from 'react-native-action-button'
 import { getFoodEntries } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
 
+import { connect } from 'react-redux';
+
+import { listFood } from '../redux/reducer';
+
 
 class FoodEntries extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { entries: [] };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { entries: [] };
+    // }
 
   static navigationOptions = ({ navigation }) => {
     const {params = {}} = navigation.state;
@@ -36,13 +40,14 @@ class FoodEntries extends React.Component {
 
   componentDidMount() {
     this._setNavigationParams()
-    this._loadFoodEntries()
+    //this._loadFoodEntries()
+    this.props.listFood('relferreira');
  }
 
- static getDerivedStateFromProps(props) {
-  console.log('getDerivedStateFromProps ')
-  return null;
-}
+//  static getDerivedStateFromProps(props) {
+//   console.log('getDerivedStateFromProps ')
+//   return null;
+// }
 
  _setNavigationParams() {
     let title       = 'Food Entries';
@@ -58,14 +63,15 @@ class FoodEntries extends React.Component {
   }
 
   render() {
+    // console.log('render', this.props.food)
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container}>
           <FlatList
-              data={this.state.entries}
+              data={this.props.food}
               renderItem={({item, index}) => this.renderListItem(item) }
               keyExtractor={(item, index) => index.toString()}
-          />
+          /> 
         </ScrollView>
         {this.renderActionButton()}
       </View>
@@ -126,4 +132,20 @@ const styles = StyleSheet.create({
 }
 });
 
-export default FoodEntries
+
+const mapStateToProps = state => {
+  // console.log(state.food)
+  //let storedFoodEntries = state.food.map
+  // console.log(state.food)
+  let storedFoodEntries =  Object.keys(state.food).map(k => ({ key: k, ...state.food[k] }));
+  return {
+    food: storedFoodEntries
+  };
+};
+
+const mapDispatchToProps = {
+  listFood
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodEntries);
+//export default FoodEntries
