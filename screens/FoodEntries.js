@@ -29,15 +29,20 @@ class FoodEntries extends React.Component {
     };
   }; 
 
-  componentWillMount() {
-    this._loadFoodEntries();
-    console.log('loaded food entries')
-  }
+  // componentWillMount() {
+  //   this._loadFoodEntries();
+  //   console.log('loaded food entries')
+  // }
 
   componentDidMount() {
     this._setNavigationParams()
-    // this._loadFoodEntries()
+    this._loadFoodEntries()
  }
+
+ static getDerivedStateFromProps(props) {
+  console.log('getDerivedStateFromProps ')
+  return null;
+}
 
  _setNavigationParams() {
     let title       = 'Food Entries';
