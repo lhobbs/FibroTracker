@@ -5,6 +5,9 @@ import Slider from '@react-native-community/slider';
 // import Picker from 'react-native-roll-picker'
 import { addFoodEntry } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
+import { connect } from 'react-redux';
+
+import { saveFood } from '../redux/reducer';
 
 
 class FoodEntry extends React.Component {
@@ -38,15 +41,16 @@ class FoodEntry extends React.Component {
     });
   }
 
-  async _saveFoodEntry() {
+  _saveFoodEntry() {
       const food = { name: this.state.food, 
         caffeine: this.state.caffeine, 
         gluten: this.state.gluten, 
         highSugar: this.state.highSugar, 
         chewiness: this.state.chewiness
      }
-     await addFoodEntry(food)
-      this.props.navigation.navigate('Food')
+     this.props.saveFood(food);//.then(r => console.log('success in food entry', JSON.stringify(r))).catch(err => console.log('err', err));
+     //await addFoodEntry(food)
+       this.props.navigation.navigate('Food')
   }
 
   render() {
@@ -137,4 +141,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FoodEntry 
+
+const mapStateToProps = state => {
+    //let storedFoodEntries =  state.food.push(food);
+    return {
+      foods: state.food
+    };
+  };
+  
+  const mapDispatchToProps = {
+    saveFood
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(FoodEntry);
+
+// export default FoodEntry 

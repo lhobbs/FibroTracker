@@ -40,14 +40,9 @@ class FoodEntries extends React.Component {
 
   componentDidMount() {
     this._setNavigationParams()
-    //this._loadFoodEntries()
     this.props.listFood('relferreira');
  }
 
-//  static getDerivedStateFromProps(props) {
-//   console.log('getDerivedStateFromProps ')
-//   return null;
-// }
 
  _setNavigationParams() {
     let title       = 'Food Entries';
@@ -59,7 +54,6 @@ class FoodEntries extends React.Component {
 
   _loadFoodEntries() {
       getFoodEntries().then(results => this.setState({entries: results}))
-      //this.setState({entries: getFoodEntries()})
   }
 
   render() {
@@ -134,12 +128,10 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
-  // console.log(state.food)
-  //let storedFoodEntries = state.food.map
-  // console.log(state.food)
-  let storedFoodEntries =  Object.keys(state.food).map(k => ({ key: k, ...state.food[k] }));
+  // let storedFoodEntries =  Object.keys(state.food).map(k => ({ key: k, ...state.food[k] }));
+  // console.log(storedFoodEntries)
   return {
-    food: storedFoodEntries
+    food: state.food
   };
 };
 
