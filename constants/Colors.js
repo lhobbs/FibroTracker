@@ -14,6 +14,7 @@ export default {
   noticeText: '#fff',
   primaryBackground: '#0C8A96',
   teal: '#0C8A96',
+  lightTeal: '#56D7E3',
   pink: '#EE3B64',
   lightPink: '#F5AFC2',
   lightPink2: '#F0849D',

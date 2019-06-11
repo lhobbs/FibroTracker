@@ -23,17 +23,17 @@ class Menu extends Component {
             </Text>
           </TouchableHighlight>
           
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')}>
-            <Text style={styles.listItem}>
-              Sleep
-            </Text>
-          </TouchableHighlight>
-
           <TouchableHighlight onPress={() => this.props.navigation.navigate('Medicine')}>
             <Text style={styles.listItem}>
               Medicine
             </Text>
           </TouchableHighlight>
+
+          {/* <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')}>
+            <Text style={styles.listItem}>
+              Sleep
+            </Text>
+          </TouchableHighlight> */}
       </View>
     );
   }

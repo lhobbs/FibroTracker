@@ -97,8 +97,8 @@ class MedicineEntries extends React.Component {
   renderListItem(item) {
     return (
       <View style={styles.listItem}> 
+        <Text style={styles.time}>{moment(item.dateTime).format('LT')}</Text> 
         <Text style={styles.label}>{item.name}</Text>
-          
       </View>
     )
   }
@@ -138,6 +138,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     color: Colors.darkGray
+   },
+   time: {
+    fontSize: 12,
+    color: Colors.darkGray,
+    alignSelf: 'flex-end',
+    paddingRight: 10
 }
 });
 

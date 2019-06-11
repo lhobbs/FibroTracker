@@ -80,7 +80,7 @@ class FoodEntries extends React.Component {
     // console.log('render', this.props.food)
     return (
       <View style={styles.container}>
-        <View style={[styles.row, {alignItems: 'stretch'}]}>
+        <View style={[styles.row, {alignItems: 'stretch', borderBottomColor: Colors.lightTeal, borderBottomWidth: 1}]}>
           <TouchableHighlight onPress={() => this.updateDate(-1)} style={{flex:1}}>
             <Icon.FontAwesome name="arrow-left" style={{color: Colors.teal}} size={26} />
           </TouchableHighlight>
@@ -104,6 +104,7 @@ class FoodEntries extends React.Component {
   renderListItem(item) {
     return (
       <View style={styles.listItem}> 
+        <Text style={styles.time}>{moment(item.dateTime).format('LT')}</Text> 
         <Text style={styles.label}>{item.name}</Text>
           <Right>
             <View style={{flexDirection: 'row'}}>
@@ -152,7 +153,13 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     color: Colors.darkGray
-}
+  },  
+  time: {
+    fontSize: 12,
+    color: Colors.darkGray,
+    alignSelf: 'flex-end',
+    paddingRight: 10
+  }
 });
 
 
