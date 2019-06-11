@@ -40,20 +40,33 @@ class FoodEntries extends React.Component {
   componentDidMount() {
     this._setNavigationParams()
     this.props.listFood().then(food => {
-      console.log(this.state.date.startOf('day'))
-      var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
-      this.setState({todaysEntries: todayFood})
+      this.filterFood()
+      // console.log(this.state.date.startOf('day'))
+      // var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+      // this.setState({todaysEntries: todayFood})
     });
  }
 
  componentDidUpdate(prevProps) {
   // Requesting new data if route has changed.
   if (prevProps.food !== this.props.food) {
+    this.filterFood();
+    // var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+    // this.setState({todaysEntries: todayFood})
+  }
+  // console.log("update", this.state.date)
+}
+
+  updateDate(days) {
+    this.setState({date: this.state.date.add(days, 'day')}) 
+    //console.log('updateDate', this.state.date)
+    this.filterFood()
+  }
+
+  filterFood() {
     var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
     this.setState({todaysEntries: todayFood})
   }
-  console.log('update')
-}
 
  _setNavigationParams() {
     let title       = 'Food Entries';
@@ -67,11 +80,14 @@ class FoodEntries extends React.Component {
     // console.log('render', this.props.food)
     return (
       <View style={styles.container}>
-        <View style={styles.row}>
-          <TouchableHighlight>
+        <View style={[styles.row, {alignItems: 'stretch'}]}>
+          <TouchableHighlight onPress={() => this.updateDate(-1)} style={{flex:1}}>
             <Icon.FontAwesome name="arrow-left" style={{color: Colors.teal}} size={26} />
           </TouchableHighlight>
-          <Text style={{color: Colors.teal, textAlign: 'center'}}>{this.state.date.format("L")}</Text>
+          <Text style={{color: Colors.teal, flex: 1, fontSize: 18, alignSelf: 'center'}}>{this.state.date.format("ddd MMMM DD")}</Text>
+          <TouchableHighlight onPress={() => this.updateDate(1)} style={{flex:1, alignItems: 'flex-end'}}>
+            <Icon.FontAwesome name="arrow-right" style={{color: Colors.teal}} size={26} />
+          </TouchableHighlight>
         </View>
         <ScrollView style={styles.container}>
           <FlatList
