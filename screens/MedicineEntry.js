@@ -3,9 +3,10 @@ import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, P
 import { Icon } from 'expo';
 import Slider from '@react-native-community/slider';
 // import Picker from 'react-native-roll-picker'
-import { addFoodEntry } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
+import { connect } from 'react-redux';
 
+import { saveMedicine } from '../redux/reducer';
 
 class MedicineEntry extends React.Component {
     state = { 
@@ -34,7 +35,7 @@ class MedicineEntry extends React.Component {
  _setNavigationParams() {
     let title       = 'Medicine Entry';
     let headerRight = 
-        <TouchableHighlight onPress={this._saveFoodEntry.bind(this)}>
+        <TouchableHighlight onPress={() => this._saveMedicineEntry()}>
             <Text style={{color:'#fff', padding: 10}}>Save</Text> 
         </TouchableHighlight>;
   
@@ -44,16 +45,16 @@ class MedicineEntry extends React.Component {
     });
   }
 
-  async _saveFoodEntry() {
-      const food = { name: this.state.food, 
-        caffeine: this.state.caffeine, 
-        gluten: this.state.gluten, 
-        highSugar: this.state.highSugar, 
-        chewiness: this.state.chewiness
-     }
-     await addFoodEntry(food)
-      this.props.navigation.navigate('Food')
-  }
+_saveMedicineEntry() {
+    const med = { 
+        name: this.state.name, 
+        dosage: this.state.dosage, 
+        category: this.state.category, 
+        helped: this.state.helped, 
+   }
+   this.props.saveMedicine(med);
+   this.props.navigation.navigate('Medicine')
+}
 
   render() {
     return (
@@ -100,13 +101,7 @@ class MedicineEntry extends React.Component {
         </View>
       </ScrollView>
     );
-  }
-
-//   componentWillReceiveProps(props) {
-//       console.log('props')
-//   }
-
-  
+  } 
   
 }
 
@@ -137,4 +132,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MedicineEntry 
+
+const mapStateToProps = state => {
+    //let storedFoodEntries =  state.food.push(food);
+    return {
+      meds: state.meds
+    };
+  };
+  
+  const mapDispatchToProps = {
+    saveMedicine
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(MedicineEntry);
+// export default MedicineEntry 

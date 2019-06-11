@@ -10,6 +10,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import FoodEntry from '../screens/FoodEntry';
 import FoodEntries from '../screens/FoodEntries';
 import MedicineEntry from '../screens/MedicineEntry';
+import MedicineEntries from '../screens/MedicineEntries';
 import Menu from './DrawerMenu';
 
 var defaultNavOptions = {
@@ -39,7 +40,7 @@ const FoodStack = createStackNavigator({
 });
 
 const MedicineStack = createStackNavigator({
-    Medicine: FoodEntries,
+    Medicine: MedicineEntries,
     AddMedicine: MedicineEntry,
   });
 
