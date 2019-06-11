@@ -5,19 +5,23 @@ import vIcon from 'react-native-vector-icons';
 import { Right } from 'native-base';
 import ActionButton from 'react-native-action-button'
 
-import { getFoodEntries } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
 
 import { connect } from 'react-redux';
+import moment from 'moment'
 
 import { listFood } from '../redux/reducer';
 
 
 class FoodEntries extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = { entries: [] };
-    // }
+    constructor(props) {
+        super(props);
+        // console.log(props)
+        this.state = { 
+          date: moment(),
+          todaysEntries: []
+        };
+    }
 
   static navigationOptions = ({ navigation }) => {
     const {params = {}} = navigation.state;
@@ -33,16 +37,23 @@ class FoodEntries extends React.Component {
     };
   }; 
 
-  // componentWillMount() {
-  //   this._loadFoodEntries();
-  //   console.log('loaded food entries')
-  // }
-
   componentDidMount() {
     this._setNavigationParams()
-    this.props.listFood('relferreira');
+    this.props.listFood().then(food => {
+      console.log(this.state.date.startOf('day'))
+      var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+      this.setState({todaysEntries: todayFood})
+    });
  }
 
+ componentDidUpdate(prevProps) {
+  // Requesting new data if route has changed.
+  if (prevProps.food !== this.props.food) {
+    var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+    this.setState({todaysEntries: todayFood})
+  }
+  console.log('update')
+}
 
  _setNavigationParams() {
     let title       = 'Food Entries';
@@ -52,17 +63,19 @@ class FoodEntries extends React.Component {
     });
   }
 
-  _loadFoodEntries() {
-      getFoodEntries().then(results => this.setState({entries: results}))
-  }
-
   render() {
     // console.log('render', this.props.food)
     return (
       <View style={styles.container}>
+        <View style={styles.row}>
+          <TouchableHighlight>
+            <Icon.FontAwesome name="arrow-left" style={{color: Colors.teal}} size={26} />
+          </TouchableHighlight>
+          <Text style={{color: Colors.teal, textAlign: 'center'}}>{this.state.date.format("L")}</Text>
+        </View>
         <ScrollView style={styles.container}>
           <FlatList
-              data={this.props.food}
+              data={this.state.todaysEntries}
               renderItem={({item, index}) => this.renderListItem(item) }
               keyExtractor={(item, index) => index.toString()}
           /> 
