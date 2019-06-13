@@ -24,7 +24,8 @@ class SleepEntry extends React.Component {
             sleepQuality: 0,
             energyLevel: 0,
           },
-          
+          wakeUpDifficulties: [{id: 1, description: 'Not too hard'}, {id: 2, description: 'Hard'}, {id: 3, description: 'Very hard'}],
+          sleepQualities: [{id: '1', description: 'Barely slept'}, {id: '2', description: 'Slept poorly'}, {id:'3', description: 'Slept ok'}, {id: '4', description: 'Slept great'}]
         };
     }
     
@@ -34,7 +35,10 @@ class SleepEntry extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerLeft: params.headerLeft,
+        headerLeft: 
+        <TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
+          <Icon.Ionicons name='md-menu' color='#fff' size={30} />
+        </TouchableHighlight>,
         headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
     };
@@ -152,8 +156,8 @@ class SleepEntry extends React.Component {
             value={this.state.todaysEntry.difficultyStayingAsleep}            
         />
       </View>
-      <View style={styles.row}>
-        <TextInput
+      <View style={{padding: 10}}>
+        {/* <TextInput
             style={styles.label}
             onChangeText={(wakeUpDifficulty) => this.setState(state => ({
                 todaysEntry: {
@@ -163,20 +167,60 @@ class SleepEntry extends React.Component {
             }))}
             value={this.state.todaysEntry.wakeUpDifficulty}
             placeholder="Wake Up Difficulty"
-        />
+        /> */}
+        <Text style={styles.label}>Wake Up Difficulty</Text>
+        <Picker
+            style={{ padding: 10, color: '#FFF', width: '100%'}}
+            selectedValue={this.state.todaysEntry.wakeUpDifficulty.toString()}
+            onValueChange={(itemValue, itemIndex) =>
+                // this.setState({category: itemValue})
+                this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        wakeUpDifficulty: itemValue
+                    }
+                }))
+            } >
+            {
+                this.state.wakeUpDifficulties.map((difficulty) => {
+                    // console.log(difficulty)
+                    return <Picker.Item label={difficulty.description} value={difficulty.id} key={difficulty.id} />
+                })
+            }
+        </Picker>
       </View>
-      <View style={styles.row}>
-        <TextInput
+      <View style={{padding: 10}}>
+        {/* <TextInput
             style={styles.label}
             onChangeText={(sleepQuality) => this.setState(state => ({
                 todaysEntry: {
                     ...state.todaysEntry,
-                    sleepQuality
+                    sleepQuality: sleepQuality.toString()
                 }
             }))}
-            value={this.state.todaysEntry.sleepQuality}
+            value={this.state.todaysEntry.sleepQuality.toString()}
             placeholder="Sleep Quality"
-        />
+        /> */}
+        <Text style={styles.label}>Wake Up Difficulty</Text>
+        <Picker
+            style={{ padding: 10, color: '#FFF', width: '100%'}}
+            selectedValue={this.state.todaysEntry.sleepQuality.toString()}
+            onValueChange={(itemValue, itemIndex) =>
+                // this.setState({category: itemValue})
+                this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        sleepQuality: itemValue
+                    }
+                }))
+            } >
+            {
+                this.state.sleepQualities.map((quality) => {
+                    // console.log(difficulty)
+                    return <Picker.Item label={quality.description} value={quality.id} key={quality.id} />
+                })
+            }
+        </Picker>
       </View>
       </ScrollView>
     );
