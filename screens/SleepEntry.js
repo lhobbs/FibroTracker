@@ -25,7 +25,7 @@ class SleepEntry extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerStyle:  {backgroundColor: Colors.pink},
+        headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
     };
   }; 
@@ -121,15 +121,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff'
-  },
+    backgroundColor: Colors.black,
+},
   row: {
       flexDirection: 'row',
       padding: 10
   },
   label: {
       fontSize: 20,
-      color: Colors.darkGray
+      color: Colors.lightGray
   },
   picker: {
       flex: 2,

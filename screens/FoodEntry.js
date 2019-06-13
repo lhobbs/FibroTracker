@@ -19,7 +19,7 @@ class FoodEntry extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerStyle:  {backgroundColor: Colors.pink},
+        headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
     };
   }; 
@@ -29,7 +29,7 @@ class FoodEntry extends React.Component {
  }
 
  _setNavigationParams() {
-    let title       = 'Food Entry';
+    let title       = 'Add Food';
     let headerRight = 
         <TouchableHighlight onPress={this._saveFoodEntry.bind(this)}>
             <Text style={{color:'#fff', padding: 10}}>Save</Text> 
@@ -84,7 +84,7 @@ class FoodEntry extends React.Component {
         <Switch
             onValueChange={(highSugar) => this.setState({highSugar})}
             value={this.state.highSugar}
-            trackColor="#F5AFC2"
+            trackColor={Colors.lightGray}
         />
       </View>
       <View style={styles.row}>
@@ -97,7 +97,7 @@ class FoodEntry extends React.Component {
             
         />  */}
         <Picker
-            style={{width: 150, padding: 10}}
+            style={{width: 150, padding: 10, color: '#FFF'}}
             selectedValue={this.state.chewiness}
             onValueChange={(itemValue, itemIndex) =>
                 this.setState({chewiness: itemValue})
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff'
+    backgroundColor: Colors.black,
   },
   row: {
       flexDirection: 'row',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   label: {
       fontSize: 20,
-      color: Colors.darkGray
+      color: '#FFF'
   },
   picker: {
       flex: 2,

@@ -27,7 +27,7 @@ class ActivityEntry extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerStyle:  {backgroundColor: Colors.pink},
+        headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
     };
   }; 
@@ -75,7 +75,7 @@ class ActivityEntry extends React.Component {
       <View style={styles.row}>
         <Text style={styles.label}>Activity Level</Text>
         <Picker
-            style={{width: 150, padding: 10}}
+            style={{width: 150, padding: 10, color: '#FFF'}}
             selectedValue={this.state.activityLevel}
             onValueChange={(itemValue, itemIndex) =>
                 this.setState({activityLevel: itemValue})
@@ -90,7 +90,7 @@ class ActivityEntry extends React.Component {
       <View style={styles.row}>
         <Text style={styles.label}>Effect</Text>
         <Picker
-            style={{width: 150, padding: 10}}
+            style={{width: 150, padding: 10, color: '#FFF'}}
             selectedValue={this.state.effect}
             onValueChange={(itemValue, itemIndex) =>
                 this.setState({effect: itemValue})
@@ -112,15 +112,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff'
-  },
+    backgroundColor: Colors.black
+},
   row: {
       flexDirection: 'row',
       padding: 10
   },
   label: {
       fontSize: 20,
-      color: Colors.darkGray
+      color: '#FFF'
   },
   picker: {
       flex: 2,

@@ -28,7 +28,7 @@ class MedicineEntries extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerStyle:  {backgroundColor: Colors.pink},
+        headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
         headerLeft: 
           <TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
@@ -62,7 +62,7 @@ class MedicineEntries extends React.Component {
   }
 
  _setNavigationParams() {
-    let title       = 'Medicine Entries';
+    let title       = 'Medicine';
   
     this.props.navigation.setParams({ 
       title,
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingTop: 15,
     // backgroundColor: Colors.lightPink,
+    backgroundColor: Colors.black    
   },
   optionsTitleText: {
     fontSize: 16,
@@ -137,11 +138,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 20,
-    color: Colors.darkGray
+    color: '#FFF'
    },
    time: {
     fontSize: 12,
-    color: Colors.darkGray,
+    color: Colors.lightGray,
     alignSelf: 'flex-end',
     paddingRight: 10
 }

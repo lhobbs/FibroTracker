@@ -23,7 +23,7 @@ class MedicineEntry extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerStyle:  {backgroundColor: Colors.pink},
+        headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
     };
   }; 
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff'
+    backgroundColor: Colors.black
   },
   row: {
       flexDirection: 'row',
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   label: {
       fontSize: 20,
-      color: Colors.darkGray
+      color: '#FFF'
   },
   picker: {
       flex: 2,

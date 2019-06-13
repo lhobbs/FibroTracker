@@ -45,14 +45,16 @@ export default class HomeScreen extends React.Component {
       ]
       },
       chartConfig : {
-        backgroundGradientFrom: '#FFF',
-        backgroundGradientTo: '#FFF',
-        color: (opacity = 1) => Colors.teal, //`rgba(26, 255, 146, ${opacity})`,
+        backgroundColor: Colors.black,
+        backgroundGradientFrom: Colors.black,
+        backgroundGradientTo: Colors.black,
+        color: (opacity = 1) => '#fff', //`rgba(26, 255, 146, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         decimalPlaces: 1,
         style: {
           padding: 0,
-          margin: 0
+          margin: 0,
+          backgroundColor: Colors.black
         }
       },
       screenWidth: Dimensions.get('window').width - 50
@@ -64,7 +66,7 @@ export default class HomeScreen extends React.Component {
     const {params = {}} = navigation.state;
     return {
       headerTitle: <Text style={{color: '#FFF', fontSize: 24}}>Fibro Tracker</Text>,
-      headerStyle:  {backgroundColor: Colors.pink},
+      headerStyle:  {backgroundColor: Colors.darkGray},
       headerLeft: 
         (<TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
           <Icon.Ionicons name='md-menu' color='#fff' size={30} />
@@ -88,21 +90,21 @@ export default class HomeScreen extends React.Component {
             </Card>
 
             <Card style={styles.card}>
-              <CardItem header>
-                <Text style={styles.subHeader}>Hours Slept Last Night</Text>
+              <CardItem header style={{backgroundColor: Colors.darkGray}}>
+                <Text style={styles.subHeader2}>Hours Slept Last Night</Text>
               </CardItem>
-              <CardItem style={{ alignSelf: "center" }}>
+              <CardItem style={{ alignSelf: "center", backgroundColor: Colors.darkGray }}>
                 <Text style={styles.largeText}>6</Text>
               </CardItem>
             </Card>
           </View>
 
-          <View style={styles.row}>
+          <View style={[styles.row, {backgroundColor: Colors.black}]}>
             <Card style={[styles.card, {padding: 0}]}>
-              <CardItem header>
-                <Text style={styles.subHeader}>Current Week Pain</Text>
+              <CardItem header style={{backgroundColor: Colors.black}}>
+                <Text style={styles.subHeader2}>Current Week Pain</Text>
               </CardItem>
-              <CardItem style={{padding: 0, margin: 0}}>
+              <CardItem style={{padding: 0, margin: 0, backgroundColor: Colors.black}}>
                 <LineChart
                   data={this.state.painWeekData}
                   width={this.state.screenWidth}
@@ -124,14 +126,14 @@ export default class HomeScreen extends React.Component {
 
   renderActionButton() {
     return ( 
-        <ActionButton buttonColor={Colors.teal}>
+        <ActionButton buttonColor={Colors.teal}> 
           <ActionButton.Item  
             buttonColor='#FFF' 
             onPress={() => {this.props.navigation.navigate("AddFood")}}>
             <vIcon.MaterialCommunityIcons
               name='food'
               size={26}
-              style={{ marginBottom: -3 }}
+              style={{ marginBottom: -3, backgroundColor: Colors.darkGray }}
               color={Colors.teal}
             />
             </ActionButton.Item>
@@ -181,7 +183,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.black,
   },
   contentContainer: {
     paddingTop: 30,
@@ -196,6 +198,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center'
   },
+  subHeader2: {
+    color: '#FFF',
+    textAlign: 'center',
+    alignSelf: 'center'
+  },
   row: {
     flex: 1,
     flexDirection: 'row',
@@ -204,9 +211,12 @@ const styles = StyleSheet.create({
   card: {
     // width: '100%'
     flex: 2,
+    backgroundColor: Colors.darkGray,
+    borderColor: Colors.black
   },
   cardInverse: {
     flex: 2,
     backgroundColor: Colors.pink,
+    borderColor: Colors.black
   }
 });

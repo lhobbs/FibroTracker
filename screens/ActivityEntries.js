@@ -28,7 +28,7 @@ class ActivityEntries extends React.Component {
     return {
         title: params.title,
         headerRight: params.headerRight,
-        headerStyle:  {backgroundColor: Colors.pink},
+        headerStyle:  {backgroundColor: Colors.darkGray},
         headerTintColor: '#fff',
         headerLeft: 
           <TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingTop: 15,
-    // backgroundColor: Colors.lightPink,
+    backgroundColor: Colors.black,
   },
   optionsTitleText: {
     fontSize: 16,
@@ -137,11 +137,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 20,
-    color: Colors.darkGray
+    color: '#FFF'
    },
    time: {
     fontSize: 12,
-    color: Colors.darkGray,
+    color: Colors.lightGray,
     alignSelf: 'flex-end',
     paddingRight: 10
 }
