@@ -39,8 +39,7 @@ const ActivityStack = createStackNavigator({
 });
 
 const SleepStack = createStackNavigator({
-  Sleep: ActivityEntries,
-  AddSleep: SleepEntry,
+  Sleep: SleepEntry,
 });
 
 export default createDrawerNavigator({

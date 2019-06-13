@@ -43,7 +43,7 @@ class Menu extends Component {
             </Text>
           </TouchableHighlight>
 
-          <TouchableHighlight onPress={() => this.props.navigation.navigate('AddSleep')}>
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Sleep')}>
             <Text style={styles.listItem}>
               Sleep
             </Text>
