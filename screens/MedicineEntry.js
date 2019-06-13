@@ -88,7 +88,6 @@ _saveMedicineEntry() {
                         return <Picker.Item label={category.description} value={category.id} key={category.id} />
                     })
                 }
-                {/* <Picker.Item label="Daily" value="1" /> */}
             </Picker>
         </View>
         <View style={styles.row}>

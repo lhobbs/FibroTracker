@@ -14,6 +14,7 @@ import reducer from './redux/reducer';
 
 const client = axios.create({
   baseURL: 'https://us-central1-fibrotracker.cloudfunctions.net',
+  // baseURL: 'http://localhost:5000/fibrotracker/us-central1',
   responseType: 'json'
 });
 

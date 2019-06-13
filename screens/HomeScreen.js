@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
       painWeekData : {
         labels: [], // ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
-          data: [ 4, 4, 3, 4, 5, 2, 3 ],
+          data: [ 2, 2, 1, 2, 0, 1, 2 ],
           color: (opacity = 1) => Colors.pink,//`rgba(134, 65, 244, ${opacity})`, // optional
           strokeWidth: 2 // optional
         },
@@ -147,7 +147,7 @@ export default class HomeScreen extends React.Component {
           </ActionButton.Item>
           <ActionButton.Item 
               buttonColor='#FFF'
-              onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+              onPress={() => {this.props.navigation.navigate("AddActivity")}}>
               <vIcon.MaterialCommunityIcons
                   name='run'
                   size={26}

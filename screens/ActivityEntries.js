@@ -10,10 +10,10 @@ import Colors from '../constants/Colors';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { listFood } from '../redux/reducer';
+import { listActivities } from '../redux/reducer';
 
 
-class FoodEntries extends React.Component {
+class ActivityEntries extends React.Component {
     constructor(props) {
         super(props);
         // console.log(props)
@@ -39,37 +39,30 @@ class FoodEntries extends React.Component {
 
   componentDidMount() {
     this._setNavigationParams()
-    this.props.listFood().then(food => {
-      this.filterFood()
-      // console.log(this.state.date.startOf('day'))
-      // var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
-      // this.setState({todaysEntries: todayFood})
+    this.props.listActivities().then(activities => {
+      this.filterActivities()
     });
  }
 
  componentDidUpdate(prevProps) {
   // Requesting new data if route has changed.
-  if (prevProps.food !== this.props.food) {
-    this.filterFood();
-    // var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
-    // this.setState({todaysEntries: todayFood})
+  if (prevProps.activities !== this.props.activities) {
+    this.filterActivities();
   }
-  // console.log("update", this.state.date)
 }
 
   updateDate(days) {
     this.setState({date: this.state.date.add(days, 'day')}) 
-    //console.log('updateDate', this.state.date)
-    this.filterFood()
+    this.filterActivities()
   }
 
-  filterFood() {
-    var todayFood = this.props.food.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
-    this.setState({todaysEntries: todayFood})
+  filterActivities() {
+    var todayActivities = this.props.activities.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+    this.setState({todaysEntries: todayActivities})
   }
 
  _setNavigationParams() {
-    let title       = 'Food Entries';
+    let title       = 'Activities';
   
     this.props.navigation.setParams({ 
       title,
@@ -80,7 +73,7 @@ class FoodEntries extends React.Component {
     // console.log('render', this.props.food)
     return (
       <View style={styles.container}>
-        <View style={[styles.row, {alignItems: 'stretch', borderBottomColor: Colors.lightTeal, borderBottomWidth: 1}]}>
+        <View style={[styles.row, {alignItems: 'stretch'}]}>
           <TouchableHighlight onPress={() => this.updateDate(-1)} style={{flex:1}}>
             <Icon.FontAwesome name="arrow-left" style={{color: Colors.teal}} size={26} />
           </TouchableHighlight>
@@ -106,21 +99,13 @@ class FoodEntries extends React.Component {
       <View style={styles.listItem}> 
         <Text style={styles.time}>{moment(item.dateTime).format('LT')}</Text> 
         <Text style={styles.label}>{item.name}</Text>
-          <Right>
-            <View style={{flexDirection: 'row'}}>
-            {item.caffeine ? <Icon.Ionicons name="md-cafe" style={{color: Colors.lightPink}} size={26} /> : null}
-            {item.gluten ? <vIcon.MaterialCommunityIcons name='corn' size={26} color={Colors.lightPink} /> : null}
-            {item.highSugar ? <vIcon.MaterialCommunityIcons name='candycane' size={26} color={Colors.lightPink} /> : null}
-            {item.chewiness > 0 ? <vIcon.MaterialCommunityIcons name={item.chewiness == 1 ? 'tooth-outline': 'tooth'} size={26} color={Colors.lightPink} /> : null}
-            </View>
-          </Right>
       </View>
     )
   }
 
   renderActionButton() {
     return ( 
-        <ActionButton buttonColor={Colors.teal} onPress={() => this.props.navigation.navigate('AddFood') }></ActionButton>
+        <ActionButton buttonColor={Colors.teal} onPress={() => this.props.navigation.navigate('AddActivity') }></ActionButton>
     );
   }
   
@@ -153,27 +138,24 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     color: Colors.darkGray
-  },  
-  time: {
+   },
+   time: {
     fontSize: 12,
     color: Colors.darkGray,
     alignSelf: 'flex-end',
     paddingRight: 10
-  }
+}
 });
 
 
 const mapStateToProps = state => {
-  // let storedFoodEntries =  Object.keys(state.food).map(k => ({ key: k, ...state.food[k] }));
-  // console.log(storedFoodEntries)
   return {
-    food: state.food
+    activities: state.activities
   };
 };
 
 const mapDispatchToProps = {
-  listFood
+  listActivities
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodEntries);
-//export default FoodEntries
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityEntries);

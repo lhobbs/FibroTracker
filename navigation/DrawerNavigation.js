@@ -11,6 +11,8 @@ import FoodEntry from '../screens/FoodEntry';
 import FoodEntries from '../screens/FoodEntries';
 import MedicineEntry from '../screens/MedicineEntry';
 import MedicineEntries from '../screens/MedicineEntries';
+import ActivityEntry from '../screens/ActivityEntry';
+import ActivityEntries from '../screens/ActivityEntries';
 import Menu from './DrawerMenu';
 
 var defaultNavOptions = {
@@ -44,20 +46,27 @@ const MedicineStack = createStackNavigator({
     AddMedicine: MedicineEntry,
   });
 
-var stack = createStackNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
-  FoodStack,
-  MedicineStack
-})
+const ActivityStack = createStackNavigator({
+    Activities: ActivityEntries,
+    AddActivity: ActivityEntry,
+});
+
+// var stack = createStackNavigator({
+//   HomeStack,
+//   LinksStack,
+//   SettingsStack,
+//   FoodStack,
+//   MedicineStack,
+//   ActivityStack
+// })
 
 export default createDrawerNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
   FoodStack,
-  MedicineStack
+  MedicineStack,
+  ActivityStack
 },
 { 
   contentComponent: Menu,

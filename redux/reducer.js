@@ -22,7 +22,16 @@ export const SAVE_MEDICINE = 'fibrotracker/medicine/SAVE_MEDICINE';
 export const SAVE_MEDICINE_SUCCESS = 'fibrotracker/medicine/SAVE_MEDICINE_SUCCESS';
 export const SAVE_MEDICINE_FAIL = 'fibrotracker/medicine/SAVE_MEDICINE_FAIL';
 
-export default function reducer(state = { food: [] }, action) {
+/*********   ACTIVITY ACTION   **********/
+export const GET_ACTIVITIES = 'fibrotracker/activity/LOAD';
+export const GET_ACTIVITIES_SUCCESS = 'fibrotracker/activity/LOAD_SUCCESS';
+export const GET_ACTIVITIES_FAIL = 'fibrotracker/activity/LOAD_FAIL';
+
+export const SAVE_ACTIVITY = 'fibrotracker/activity/SAVE_ACTIVITY';
+export const SAVE_ACTIVITY_SUCCESS = 'fibrotracker/activity/SAVE_ACTIVITY_SUCCESS';
+export const SAVE_ACTIVITY_FAIL = 'fibrotracker/activity/SAVE_ACTIVITY_FAIL';
+
+export default function reducer(state = { food: [], meds: [], activities: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
       return { ...state, loading: true };
@@ -48,7 +57,8 @@ export default function reducer(state = { food: [] }, action) {
         error: 'Error while adding food entry'
       };
 
-      case GET_MEDICINE:
+
+    case GET_MEDICINE:
       return { ...state, loading: true };
     case GET_MEDICINE_SUCCESS:
       const meds = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
@@ -63,13 +73,36 @@ export default function reducer(state = { food: [] }, action) {
         // console.log(action.payload, 'action')
         return { ...state, loading: true };
     case SAVE_MEDICINE_SUCCESS:
-    //   console.log('success', action.payload.data, state.food)
+      // console.log('success', action.payload.data)
       return { ...state, loading: false, meds: [...state.meds, action.payload.data] }
     case SAVE_MEDICINE_FAIL:
       return {
         ...state,
         loading: false,
         error: 'Error while adding med entry'
+      };
+
+
+    case GET_ACTIVITIES:
+      return { ...state, loading: true };
+    case GET_ACTIVITIES_SUCCESS:
+      const activities = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, activities: activities };
+    case GET_ACTIVITIES_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching activity entries'
+      };
+    case SAVE_ACTIVITY:
+        return { ...state, loading: true };
+    case SAVE_ACTIVITY_SUCCESS:
+      return { ...state, loading: false, activities: [...state.activities, action.payload.data] }
+    case SAVE_ACTIVITY_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding activity entry'
       };
     default:
       return state;
@@ -99,17 +132,6 @@ export function saveFood(food) {
             }
         }
     }
-    // return (dispatch) => {
-    //     return axios.post(`/addFood`, food)
-    //       .then(response => {
-    //           console.log(response.data, 'response')
-    //         dispatch(saveFoodSuccess(response.data))
-    //       })
-    //       .catch(error => {
-    //           console.log(error)
-    //         throw(error);
-    //       });
-    //   };
 }
 
 export const saveFoodSuccess = food => {
@@ -140,6 +162,31 @@ export const saveFoodSuccess = food => {
               request: {
                   url: '/addMedicine',
                   data: med,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+  export function listActivities(date) {
+    return {
+      type: GET_ACTIVITIES,
+      payload: {
+        request: {
+          url: `/getActivities`
+        }
+      }
+    };
+  }
+  
+  export function saveActivity(activity) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_ACTIVITY,
+          payload: {
+              request: {
+                  url: '/addActivity',
+                  data: activity,
                   method: 'POST'
               }
           }

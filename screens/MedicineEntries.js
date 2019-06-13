@@ -31,8 +31,8 @@ class MedicineEntries extends React.Component {
         headerStyle:  {backgroundColor: Colors.pink},
         headerTintColor: '#fff',
         headerLeft: 
-          <TouchableHighlight onPress={() => navigation.navigate('Home')} style={{padding: 10}}>
-            <Icon.Ionicons name='md-home' color='#fff' size={30} />
+          <TouchableHighlight onPress={() => navigation.toggleDrawer()} style={{padding: 10}}>
+            <Icon.Ionicons name='md-menu' color='#fff' size={30} />
           </TouchableHighlight>
     };
   }; 

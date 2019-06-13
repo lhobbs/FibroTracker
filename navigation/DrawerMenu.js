@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
 import {ScrollView, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import Colors from '../constants/Colors'
+import {Icon} from 'expo'
 
 class Menu extends Component {
   navigateToScreen = (route) => () => {
@@ -17,6 +18,13 @@ class Menu extends Component {
   render () {
     return (
       <View style={styles.container}>
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')}>
+            
+            <Text style={styles.listItem}>
+              <Icon.Ionicons name='md-home' color='#fff' size={30} style={{padding: 20}} />
+              Home
+            </Text>
+          </TouchableHighlight>
           <TouchableHighlight onPress={() => this.props.navigation.navigate('Food')}>
             <Text style={styles.listItem}>
               Food
@@ -29,11 +37,11 @@ class Menu extends Component {
             </Text>
           </TouchableHighlight>
 
-          {/* <TouchableHighlight onPress={() => this.props.navigation.navigate('Settings')}>
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Activities')}>
             <Text style={styles.listItem}>
-              Sleep
+              Activities
             </Text>
-          </TouchableHighlight> */}
+          </TouchableHighlight>
       </View>
     );
   }
