@@ -31,17 +31,7 @@ export default class HomeScreen extends React.Component {
           data: [ 2, 2, 1, 2, 0, 1, 2 ],
           color: (opacity = 1) => Colors.pink,//`rgba(134, 65, 244, ${opacity})`, // optional
           strokeWidth: 2 // optional
-        },
-        // {
-        //   data: [ 3, 4, 4, 4, 4, 3, 3 ],
-        //   color: (opacity = 1) => Colors.lightPink2,//`rgba(134, 65, 244, ${opacity})`, // optional
-        //   strokeWidth: 1 // optional
-        // },
-        // {
-        //   data: [ 4, 3, 4, 2, 4, 5, 3 ],
-        //   color: (opacity = 1) => Colors.darkPink,//`rgba(134, 65, 244, ${opacity})`, // optional
-        //   strokeWidth: 1 // optional
-        // }
+        }
       ]
       },
       chartConfig : {
@@ -128,23 +118,23 @@ export default class HomeScreen extends React.Component {
     return ( 
         <ActionButton buttonColor={Colors.teal}> 
           <ActionButton.Item  
-            buttonColor='#FFF' 
+            buttonColor={Colors.darkGray} 
             onPress={() => {this.props.navigation.navigate("AddFood")}}>
             <vIcon.MaterialCommunityIcons
               name='food'
               size={26}
-              style={{ marginBottom: -3, backgroundColor: Colors.darkGray }}
+              style={{ marginBottom: -3 }}
               color={Colors.teal}
             />
             </ActionButton.Item>
            <ActionButton.Item 
-              buttonColor='#FFF'
+              buttonColor={Colors.darkGray}
               onPress={() => {this.props.navigation.navigate("AddMedicine")}}>
               <vIcon.MaterialCommunityIcons
                   name='pill'
                   size={26}
                   style={{ marginBottom: -3 }}
-                  color={Colors.teal}
+                  color={Colors.lightTeal}
               />
           </ActionButton.Item>
           <ActionButton.Item 
@@ -161,7 +151,7 @@ export default class HomeScreen extends React.Component {
               buttonColor='#FFF'
               onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
               <vIcon.MaterialCommunityIcons
-                  name='speedometer'
+                  name='stethoscope'
                   size={26}
                   style={{ marginBottom: -3 }}
                   color={Colors.teal}

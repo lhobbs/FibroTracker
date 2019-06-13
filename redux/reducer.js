@@ -41,7 +41,17 @@ export const SAVE_SLEEP_SUCCESS = 'fibrotracker/sleep/SAVE_SLEEP_SUCCESS';
 export const SAVE_SLEEP_FAIL = 'fibrotracker/sleep/SAVE_SLEEP_FAIL';
 
 
-export default function reducer(state = { food: [], meds: [], activities: [] }, action) {
+/*********   PAIN SCALE ACTION   **********/
+export const GET_PAIN = 'fibrotracker/pain/LOAD';
+export const GET_PAIN_SUCCESS = 'fibrotracker/pain/LOAD_SUCCESS';
+export const GET_PAIN_FAIL = 'fibrotracker/pain/LOAD_FAIL';
+
+export const SAVE_PAIN = 'fibrotracker/pain/SAVE_PAIN';
+export const SAVE_PAIN_SUCCESS = 'fibrotracker/pain/SAVE_PAIN_SUCCESS';
+export const SAVE_PAIN_FAIL = 'fibrotracker/pain/SAVE_PAIN_FAIL';
+
+
+export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
       return { ...state, loading: true };
@@ -136,6 +146,29 @@ export default function reducer(state = { food: [], meds: [], activities: [] }, 
         ...state,
         loading: false,
         error: 'Error while adding sleep entry'
+      };
+
+
+    case GET_PAIN:
+      return { ...state, loading: true };
+    case GET_PAIN_SUCCESS:
+      const pain = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, pain: pain };
+    case GET_PAIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching pain entries'
+      };
+    case SAVE_PAIN:
+        return { ...state, loading: true };
+    case SAVE_PAIN_SUCCESS:
+      return { ...state, loading: false, pain: [...state.pain, action.payload.data] }
+    case SAVE_PAIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding pain entry'
       };
     default:
       return state;
@@ -246,6 +279,31 @@ export const saveFoodSuccess = food => {
               request: {
                   url: '/addSleep',
                   data: sleep,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+  export function listPain(date) {
+    return {
+      type: GET_PAIN,
+      payload: {
+        request: {
+          url: `/getPain`
+        }
+      }
+    };
+  }
+  
+  export function savePain(pain) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_PAIN,
+          payload: {
+              request: {
+                  url: '/addPain',
+                  data: pain,
                   method: 'POST'
               }
           }
