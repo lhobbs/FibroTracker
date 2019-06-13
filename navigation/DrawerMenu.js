@@ -25,6 +25,19 @@ class Menu extends Component {
               Home
             </Text>
           </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('PainScale')}>
+            <Text style={styles.listItem}>
+              Daily Pain
+            </Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('PainAreas')}>
+            <Text style={styles.listItem}>
+              Pain Areas
+            </Text>
+          </TouchableHighlight>
+
           <TouchableHighlight onPress={() => this.props.navigation.navigate('Food')}>
             <Text style={styles.listItem}>
               Food

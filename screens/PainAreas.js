@@ -2,12 +2,11 @@ import React from 'react';
 import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, Picker, TouchableHighlight } from 'react-native';
 import { Icon } from 'expo';
 import Slider from '@react-native-community/slider';
-// import Picker from 'react-native-roll-picker'
 import Colors from '../constants/Colors';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { savePain, listPain } from '../redux/reducer';
+import { savePainAreas, listPainAreas } from '../redux/reducer';
 
 class PainScale extends React.Component {
     constructor(props) {
@@ -16,10 +15,15 @@ class PainScale extends React.Component {
         this.state = { 
           date: moment(),
           todaysEntry: {
-            morning: 0, 
-            midday: 0,
-            endday: 0,
-            night: 0,
+            head: 0, 
+            headDescription: '',
+            jaw: 0,
+            neck: 0,
+            shoulders: 0,
+            back: 0,
+            extremities: 0,
+            extremitiesDescription: '',
+            touchyPain: 0
           }
         };
     }
@@ -45,9 +49,9 @@ class PainScale extends React.Component {
  }
 
  _setNavigationParams() {
-    let title       = 'Pain Scale';
+    let title       = 'Pain Areas';
     let headerRight = 
-        <TouchableHighlight onPress={this._savePainScale.bind(this)}>
+        <TouchableHighlight onPress={this._savePainAreas.bind(this)}>
             <Text style={{color:'#fff', padding: 10}}>Save</Text> 
         </TouchableHighlight>;
     let headerLeft = 
@@ -62,23 +66,30 @@ class PainScale extends React.Component {
     });
   }
 
-  async _savePainScale() {
+  async _savePainAreas() {
       const pain = { 
-        morning: this.state.morning, 
-        midday: this.state.midday, 
-        endday: this.state.endday, 
-        night: this.state.night
+        head: this.state.head, 
+        headDescription: this.state.headDescription,
+        jaw: this.state.jaw,
+        neck: this.state.neck,
+        shoulders: this.state.shoulders,
+        back: this.state.back,
+        extremities: this.state.extremities,
+        extremitiesDescription: this.state.extremitiesDescription,
+        touchyPain: this.state.touchyPain
      }
-    this.props.savePain(pain);
+    this.props.savePainAreas(pain);
   }
 
   updateDate(days) {
     this.setState({date: this.state.date.add(days, 'day')}) 
+    //console.log('updateDate', this.state.date)
     this.filterPain()
   }
 
   filterPain() {
-    var todayPain = this.props.pain.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+    var todayPain = this.props.painAreas.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
+    // there should be one entry per day, but prevent error if array is empty
     if (todayPain.length > 0)
         this.setState({todaysEntry: todayPain[0]})
   }
@@ -96,7 +107,7 @@ class PainScale extends React.Component {
           </TouchableHighlight>
         </View>
         <View style={styles.row}>
-            <Text style={styles.label}>Morning</Text>
+            <Text style={styles.label}>Head</Text>
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
@@ -107,13 +118,26 @@ class PainScale extends React.Component {
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
-                        morning: pain
+                        head: pain
                     }
                 }))}
             />
         </View>
         <View style={styles.row}>
-            <Text style={styles.label}>Mid-day</Text>
+            <TextInput
+                style={styles.label}
+                onChangeText={(pain) => this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        headDescription: pain
+                    }
+                }))}
+                value={this.state.food}
+                placeholder="Headache type"
+            />
+        </View>
+        <View style={styles.row}>
+            <Text style={styles.label}>Jaw</Text>
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
@@ -124,13 +148,13 @@ class PainScale extends React.Component {
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
-                        midday: pain
+                        jaw: pain
                     }
                 }))}
             />
         </View>
         <View style={styles.row}>
-            <Text style={styles.label}>End of day</Text>
+            <Text style={styles.label}>Neck</Text>
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
@@ -141,13 +165,13 @@ class PainScale extends React.Component {
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
-                        endday: pain
+                        neck: pain
                     }
                 }))}
             />
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Night</Text>
+        <Text style={styles.label}>Shoulders</Text>
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
@@ -158,11 +182,75 @@ class PainScale extends React.Component {
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
-                        night: pain
+                        shoulders: pain
                     }
                 }))}
             />
       </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Back</Text>
+            <Slider
+                style={{width: 200, height: 40}}
+                minimumValue={0}
+                maximumValue={3}
+                step={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                onValueChange={(pain) => this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        back: pain
+                    }
+                }))}
+            />
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Touchy Pain</Text>
+            <Slider
+                style={{width: 200, height: 40}}
+                minimumValue={0}
+                maximumValue={3}
+                step={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                onValueChange={(pain) => this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        touchyPain: pain
+                    }
+                }))}
+            />
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Extremities</Text>
+            <Slider
+                style={{width: 200, height: 40}}
+                minimumValue={0}
+                maximumValue={3}
+                step={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                onValueChange={(pain) => this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        extremities: pain
+                    }
+                }))}
+            />
+      </View>
+        <View style={styles.row}>
+            <TextInput
+                style={styles.label}
+                onChangeText={(pain) => this.setState(state => ({
+                    todaysEntry: {
+                        ...state.todaysEntry,
+                        extremitiesDescription: pain
+                    }
+                }))}
+                value={this.state.food}
+                placeholder="Extremities description"
+            />
+         </View>
       </ScrollView>
     );
   }
@@ -198,13 +286,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-      pain: state.pain
+      painAreas: state.painAreas
     };
   };
   
   const mapDispatchToProps = {
-    savePain,
-    listPain
+    savePainAreas,
+    listPainAreas
   };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(PainScale);
+  export default connect(mapStateToProps, mapDispatchToProps)(PainAreas);

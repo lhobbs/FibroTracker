@@ -50,6 +50,15 @@ export const SAVE_PAIN = 'fibrotracker/pain/SAVE_PAIN';
 export const SAVE_PAIN_SUCCESS = 'fibrotracker/pain/SAVE_PAIN_SUCCESS';
 export const SAVE_PAIN_FAIL = 'fibrotracker/pain/SAVE_PAIN_FAIL';
 
+/*********   PAIN AREAS ACTION   **********/
+export const GET_PAINAREAS = 'fibrotracker/painareas/LOAD';
+export const GET_PAINAREAS_SUCCESS = 'fibrotracker/painareas/LOAD_SUCCESS';
+export const GET_PAINAREAS_FAIL = 'fibrotracker/painareas/LOAD_FAIL';
+
+export const SAVE_PAINAREAS = 'fibrotracker/painareas/SAVE_ITEM';
+export const SAVE_PAINAREAS_SUCCESS = 'fibrotracker/painareas/SAVE_ITEM_SUCCESS';
+export const SAVE_PAINAREAS_FAIL = 'fibrotracker/painareas/SAVE_ITEM_FAIL';
+
 
 export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [] }, action) {
   switch (action.type) {
@@ -169,6 +178,28 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
         ...state,
         loading: false,
         error: 'Error while adding pain entry'
+      };
+
+    case GET_PAINAREAS:
+      return { ...state, loading: true };
+    case GET_PAINAREAS_SUCCESS:
+      const pain = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, painAreas: pain };
+    case GET_PAINAREAS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching pain area entries'
+      };
+    case SAVE_PAINAREAS:
+        return { ...state, loading: true };
+    case SAVE_PAINAREAS_SUCCESS:
+      return { ...state, loading: false, painAreas: [...state.painAreas, action.payload.data] }
+    case SAVE_PAINAREAS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding pain area entry'
       };
     default:
       return state;
@@ -303,6 +334,31 @@ export const saveFoodSuccess = food => {
           payload: {
               request: {
                   url: '/addPain',
+                  data: pain,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+  export function listPainAreas(date) {
+    return {
+      type: GET_PAINAREAS,
+      payload: {
+        request: {
+          url: `/getPainAreas`
+        }
+      }
+    };
+  }
+  
+  export function savePainAreas(pain) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_PAIN,
+          payload: {
+              request: {
+                  url: '/addPainAreas',
                   data: pain,
                   method: 'POST'
               }
