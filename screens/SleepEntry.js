@@ -3,9 +3,10 @@ import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, P
 import { Icon } from 'expo';
 import Slider from '@react-native-community/slider';
 // import Picker from 'react-native-roll-picker'
-import { addFoodEntry } from '../assets/scripts/service'
 import Colors from '../constants/Colors';
+import { connect } from 'react-redux';
 
+import { saveSleep } from '../redux/reducer';
 
 class SleepEntry extends React.Component {
     state = { 
@@ -36,7 +37,7 @@ class SleepEntry extends React.Component {
  _setNavigationParams() {
     let title       = 'Sleep Entry';
     let headerRight = 
-        <TouchableHighlight onPress={this._saveFoodEntry.bind(this)}>
+        <TouchableHighlight onPress={this._saveSleepEntry.bind(this)}>
             <Text style={{color:'#fff', padding: 10}}>Save</Text> 
         </TouchableHighlight>;
   
@@ -46,15 +47,19 @@ class SleepEntry extends React.Component {
     });
   }
 
-  async _saveFoodEntry() {
-      const food = { name: this.state.food, 
-        caffeine: this.state.caffeine, 
-        gluten: this.state.gluten, 
-        highSugar: this.state.highSugar, 
-        chewiness: this.state.chewiness
+  async _saveSleepEntry() {
+      const sleep = { 
+        bedTime: this.state.bedTime, 
+        wakeUpTime: this.state.wakeUpTime, 
+        difficultyFallingAsleep: this.state.difficultyFallingAsleep, 
+        difficultyStayingAsleep: this.state.difficultyStayingAsleep, 
+        wakeUpDifficulty: this.state.wakeUpDifficulty,
+        sleepQuality: this.state.sleepQuality
      }
-     await addFoodEntry(food)
-      this.props.navigation.navigate('Food')
+    //  await addFoodEntry(food)
+    //   this.props.navigation.navigate('Food')
+    this.props.saveSleep(sleep);
+    // this.props.navigation.navigate('Sleep')
   }
 
   render() {
@@ -63,55 +68,49 @@ class SleepEntry extends React.Component {
         <View style={styles.row}>
             <TextInput
                 style={styles.label}
-                onChangeText={(food) => this.setState({food})}
-                value={this.state.food}
-                placeholder="Food Item"
+                onChangeText={(bedTime) => this.setState({bedTime})}
+                value={this.state.bedTime}
+                placeholder="Bed Time"
+            />
+        </View>
+        <View style={styles.row}>
+            <TextInput
+                style={styles.label}
+                onChangeText={(wakeUpTime) => this.setState({wakeUpTime})}
+                value={this.state.wakeUpTime}
+                placeholder="Wake Up Time"
             />
         </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Caffeine?</Text>
+        <Text style={styles.label}>Difficulty Falling Asleep</Text>
         <Switch
-            onValueChange={(caffeine) => this.setState({caffeine})}
-            value={this.state.caffeine}            
+            onValueChange={(difficultyFallingAsleep) => this.setState({difficultyFallingAsleep})}
+            value={this.state.difficultyFallingAsleep}            
         />
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Gluten?</Text>
+        <Text style={styles.label}>Difficulty Staying Asleep</Text>
         <Switch
-            onValueChange={(gluten) => this.setState({gluten})}
-            value={this.state.gluten}
-            trackColor={Colors.trackColor}
+            onValueChange={(difficultyStayingAsleep) => this.setState({difficultyStayingAsleep})}
+            value={this.state.difficultyStayingAsleep}            
         />
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>High Sugar?</Text>
-        <Switch
-            onValueChange={(highSugar) => this.setState({highSugar})}
-            value={this.state.highSugar}
-            trackColor="#F5AFC2"
+        <TextInput
+            style={styles.label}
+            onChangeText={(wakeUpDifficulty) => this.setState({wakeUpDifficulty})}
+            value={this.state.wakeUpDifficulty}
+            placeholder="Wake Up Difficulty"
         />
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Chewiness</Text>
-        {/* <Picker 
-            data = {[{a: '0 - Not at all'}, {a: '1 - Some'}, {a: '2 - Very'}]}
-            ref = '_Picker'
-            name = 'a'
-            onRowChange = {chewiness => { this.setState({chewiness})}}
-            
-        />  */}
-        <Picker
-            style={{width: 150, padding: 10}}
-            selectedValue={this.state.chewiness}
-            onValueChange={(itemValue, itemIndex) =>
-                this.setState({chewiness: itemValue})
-            }>
-            <Picker.Item label="0 - Not at all" value="0" />
-            <Picker.Item label="1 - Some" value="1" />
-            <Picker.Item label="2 - Very" value="2" />
-        </Picker>
-        </View>
-
+        <TextInput
+            style={styles.label}
+            onChangeText={(sleepQuality) => this.setState({sleepQuality})}
+            value={this.state.sleepQuality}
+            placeholder="Sleep Quality"
+        />
+      </View>
       </ScrollView>
     );
   }
@@ -145,4 +144,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SleepEntry 
+const mapStateToProps = state => {
+    return {
+      sleep: state.sleep
+    };
+  };
+  
+  const mapDispatchToProps = {
+    saveSleep
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(SleepEntry);

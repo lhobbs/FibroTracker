@@ -31,6 +31,16 @@ export const SAVE_ACTIVITY = 'fibrotracker/activity/SAVE_ACTIVITY';
 export const SAVE_ACTIVITY_SUCCESS = 'fibrotracker/activity/SAVE_ACTIVITY_SUCCESS';
 export const SAVE_ACTIVITY_FAIL = 'fibrotracker/activity/SAVE_ACTIVITY_FAIL';
 
+/*********   SLEEP ACTION   **********/
+export const GET_SLEEP = 'fibrotracker/sleep/LOAD';
+export const GET_SLEEP_SUCCESS = 'fibrotracker/sleep/LOAD_SUCCESS';
+export const GET_SLEEP_FAIL = 'fibrotracker/sleep/LOAD_FAIL';
+
+export const SAVE_SLEEP = 'fibrotracker/sleep/SAVE_SLEEP';
+export const SAVE_SLEEP_SUCCESS = 'fibrotracker/sleep/SAVE_SLEEP_SUCCESS';
+export const SAVE_SLEEP_FAIL = 'fibrotracker/sleep/SAVE_SLEEP_FAIL';
+
+
 export default function reducer(state = { food: [], meds: [], activities: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
@@ -103,6 +113,29 @@ export default function reducer(state = { food: [], meds: [], activities: [] }, 
         ...state,
         loading: false,
         error: 'Error while adding activity entry'
+      };
+
+
+    case GET_SLEEP:
+      return { ...state, loading: true };
+    case GET_SLEEP_SUCCESS:
+      const sleep = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, sleep: sleep };
+    case GET_SLEEP_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching sleep entries'
+      };
+    case SAVE_SLEEP:
+        return { ...state, loading: true };
+    case SAVE_SLEEP_SUCCESS:
+      return { ...state, loading: false, sleep: [...state.sleep, action.payload.data] }
+    case SAVE_SLEEP_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding sleep entry'
       };
     default:
       return state;
@@ -187,6 +220,32 @@ export const saveFoodSuccess = food => {
               request: {
                   url: '/addActivity',
                   data: activity,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+
+  export function listSleep(date) {
+    return {
+      type: GET_SLEEP,
+      payload: {
+        request: {
+          url: `/getSleep`
+        }
+      }
+    };
+  }
+  
+  export function saveSleep(sleep) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_SLEEP,
+          payload: {
+              request: {
+                  url: '/addSleep',
+                  data: sleep,
                   method: 'POST'
               }
           }

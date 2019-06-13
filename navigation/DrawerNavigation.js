@@ -5,14 +5,13 @@ import Colors from '../constants/Colors';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import FoodEntry from '../screens/FoodEntry';
 import FoodEntries from '../screens/FoodEntries';
 import MedicineEntry from '../screens/MedicineEntry';
 import MedicineEntries from '../screens/MedicineEntries';
 import ActivityEntry from '../screens/ActivityEntry';
 import ActivityEntries from '../screens/ActivityEntries';
+import SleepEntry from '../screens/SleepEntry';
 import Menu from './DrawerMenu';
 
 var defaultNavOptions = {
@@ -22,18 +21,6 @@ var defaultNavOptions = {
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-});
-
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
-}, {
-  navigationOptions: {
-    defaultNavOptions
-  }
-});
-
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
 });
 
 const FoodStack = createStackNavigator({
@@ -51,22 +38,17 @@ const ActivityStack = createStackNavigator({
     AddActivity: ActivityEntry,
 });
 
-// var stack = createStackNavigator({
-//   HomeStack,
-//   LinksStack,
-//   SettingsStack,
-//   FoodStack,
-//   MedicineStack,
-//   ActivityStack
-// })
+const SleepStack = createStackNavigator({
+  Sleep: ActivityEntries,
+  AddSleep: SleepEntry,
+});
 
 export default createDrawerNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
   FoodStack,
   MedicineStack,
-  ActivityStack
+  ActivityStack,
+  SleepStack
 },
 { 
   contentComponent: Menu,
