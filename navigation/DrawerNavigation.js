@@ -18,6 +18,8 @@ import GeneralInfo from '../screens/GeneralInfo';
 import Symptoms from '../screens/Symptoms';
 import AppointmentEntry from '../screens/AppointmentEntry';
 import AppointmentEntries from '../screens/AppointmentEntries';
+import NoteEntry from '../screens/NoteEntry';
+import NoteEntries from '../screens/NoteEntries';
 import Menu from './DrawerMenu';
 
 var defaultNavOptions = {
@@ -69,6 +71,11 @@ const AppointmentStack = createStackNavigator({
   AddAppointment: AppointmentEntry
 })
 
+const NoteStack = createStackNavigator({
+  Notes: NoteEntries,
+  AddNote: NoteEntry
+})
+
 export default createDrawerNavigator({
   HomeStack,
   FoodStack,
@@ -79,7 +86,8 @@ export default createDrawerNavigator({
   PainAreasStack,
   GeneralInfoStack,
   SymptomsStack,
-  AppointmentStack
+  AppointmentStack,
+  NoteStack
 },
 { 
   contentComponent: Menu,

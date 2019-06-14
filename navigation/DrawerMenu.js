@@ -79,6 +79,12 @@ class Menu extends Component {
               Appointments
             </Text>
           </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Notes')}>
+            <Text style={styles.listItem}>
+              Notes
+            </Text>
+          </TouchableHighlight>
       </View>
     );
   }

@@ -157,6 +157,16 @@ export default class HomeScreen extends React.Component {
                   color={Colors.lightTeal}
               />
           </ActionButton.Item>
+          <ActionButton.Item 
+              buttonColor={Colors.darkGray}
+              onPress={() => {this.props.navigation.navigate("AddNote")}}>
+              <vIcon.SimpleLineIcons
+                  name='note'
+                  size={26}
+                  style={{ marginBottom: -3 }}
+                  color={Colors.lightTeal}
+              />
+          </ActionButton.Item>
         </ActionButton>
     );
   }

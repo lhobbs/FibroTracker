@@ -90,7 +90,17 @@ export const SAVE_APPOINTMENT_SUCCESS = 'fibrotracker/appointments/SAVE_ITEM_SUC
 export const SAVE_APPOINTMENT_FAIL = 'fibrotracker/appointments/SAVE_ITEM_FAIL';
 
 
-export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [], painAreas: [], generalInfo: [] }, action) {
+/*********   NOTES ACTION   **********/
+export const GET_NOTES = 'fibrotracker/notes/LOAD';
+export const GET_NOTES_SUCCESS = 'fibrotracker/notes/LOAD_SUCCESS';
+export const GET_NOTES_FAIL = 'fibrotracker/notes/LOAD_FAIL';
+
+export const SAVE_NOTE = 'fibrotracker/notes/SAVE_ITEM';
+export const SAVE_NOTE_SUCCESS = 'fibrotracker/notes/SAVE_ITEM_SUCCESS';
+export const SAVE_NOTE_FAIL = 'fibrotracker/notes/SAVE_ITEM_FAIL';
+
+
+export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [], painAreas: [], generalInfo: [], appointments: [], notes: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
       return { ...state, loading: true };
@@ -299,6 +309,29 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
         ...state,
         loading: false,
         error: 'Error while adding appintment entry'
+      };
+
+    
+    case GET_NOTES:
+      return { ...state, loading: true };
+    case GET_NOTES_SUCCESS:
+      const notes = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, notes: notes };
+    case GET_NOTES_FAIL:
+      return { 
+        ...state,
+        loading: false,
+        error: 'Error while fetching note entries'
+      };
+    case SAVE_NOTE:
+        return { ...state, loading: true };
+    case SAVE_NOTE_SUCCESS:
+      return { ...state, loading: false, notes: [...state.notes, action.payload.data] }
+    case SAVE_NOTE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding note entry'
       };
     default:
       return state;
@@ -536,6 +569,32 @@ export const saveFoodSuccess = food => {
               request: {
                   url: '/addAppointment',
                   data: apt,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+
+  export function listNotes() {
+    return {
+      type: GET_NOTES,
+      payload: {
+        request: {
+          url: `/getNotes`
+        }
+      }
+    };
+  }
+  
+  export function saveNote(note) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_NOTE,
+          payload: {
+              request: {
+                  url: '/addNote',
+                  data: note,
                   method: 'POST'
               }
           }
