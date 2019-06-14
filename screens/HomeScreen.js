@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
       painWeekData : {
         labels: [], // ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
-          data: [ 2, 2, 1, 2, 0, 1, 2 ],
+          data: [ 1,2,3,0,1,2,3 ],
           color: (opacity = 1) => Colors.pink,//`rgba(134, 65, 244, ${opacity})`, // optional
           strokeWidth: 2 // optional
         }
@@ -93,13 +93,41 @@ class HomeScreen extends React.Component {
     }
   }
   filterPain() {
-    var today = moment().add(-1, 'day');
+    const today = moment().add(-1, 'day');
     var todayPain = this.props.pain.filter(f => f.dateTime >= today.startOf('day') && f.dateTime < today.endOf('day'))
     if (todayPain.length > 0) {
       var pain = todayPain[0];
       var painTotal = (pain.morning + pain.midday + pain.endday + pain.night)
       this.setState({painScale: painTotal/4})
     }
+    var weekPain = []
+    var day = today.add(-6, 'day');
+    for(let i = -6; i < 1; i++) {
+      day.add(1, 'day')
+      var dayPain = this.props.pain.filter(f => f.dateTime >= day.startOf('day') && f.dateTime < day.endOf('day'))
+      // console.log(day.format("L"), i)
+      if (dayPain[0]) {
+        dayPain = dayPain[0]
+        var dayTotal = (dayPain.morning + dayPain.midday + dayPain.endday + dayPain.night)
+        var pain = dayTotal/4;
+        weekPain.push(pain)
+      }
+      else
+        weekPain.push(null)
+      
+    }
+    // console.log(weekPain)
+    this.setState(state => ({
+      painWeekData: {
+        ...state.painWeekData,
+        datasets: [{
+          data: weekPain,
+          color: (opacity = 1) => Colors.pink,
+          strokeWidth: 2
+        }]
+      }
+    }))
+    
   }
 
   render() {
