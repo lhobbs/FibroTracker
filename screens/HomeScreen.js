@@ -22,13 +22,14 @@ import { MonoText } from '../components/StyledText';
 // import Card from '../components/Card'
 import { connect } from 'react-redux';
 
-import { listSleep } from '../redux/reducer';
+import { listSleep, listPain } from '../redux/reducer';
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       sleepHours: 0,
+      painScale: 0,
       painWeekData : {
         labels: [], // ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
@@ -70,7 +71,8 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.props.listSleep().then(s => this.filterSleep())//.then(c => console.log(this.state.todaysEntry))
+    this.props.listSleep().then(s => this.filterSleep())
+    this.props.listPain().then(p => this.filterPain())
   }
   componentDidUpdate(prevProps) {
     // Requesting new data if route has changed.
@@ -90,6 +92,15 @@ class HomeScreen extends React.Component {
       this.setState({sleepHours: Math.abs(hourDiff)})
     }
   }
+  filterPain() {
+    var today = moment().add(-1, 'day');
+    var todayPain = this.props.pain.filter(f => f.dateTime >= today.startOf('day') && f.dateTime < today.endOf('day'))
+    if (todayPain.length > 0) {
+      var pain = todayPain[0];
+      var painTotal = (pain.morning + pain.midday + pain.endday + pain.night)
+      this.setState({painScale: painTotal/4})
+    }
+  }
 
   render() {
     return (
@@ -101,7 +112,10 @@ class HomeScreen extends React.Component {
                 <Text style={styles.subHeader}>Today's Pain Level</Text>
               </CardItem>
               <CardItem style={{ alignSelf: "center", backgroundColor: Colors.pink }}>
-                <Text style={[styles.largeText, {color: '#FFF'}]}>4</Text>
+                <Text style={[styles.largeText, {color: '#FFF'}]}>
+                {this.state.painScale}
+                <Text style={{fontSize: 12}}>/3</Text>
+                </Text>
               </CardItem>
             </Card>
 
@@ -250,12 +264,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    sleep: state.sleep
+    sleep: state.sleep,
+    pain: state.pain
   };
 };
 
 const mapDispatchToProps = {
-  listSleep
+  listSleep,
+  listPain
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
