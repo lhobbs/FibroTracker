@@ -435,7 +435,7 @@ export const saveFoodSuccess = food => {
   }
   
   export function saveSleep(sleep) {
-    // console.log('reduce', activity)
+    console.log('reduce', sleep)
       return {
           type: SAVE_SLEEP,
           payload: {

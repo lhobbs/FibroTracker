@@ -69,12 +69,12 @@ class SleepEntry extends React.Component {
 
   async _saveSleepEntry() {
       const sleep = { 
-        bedTime: this.state.bedTime, 
-        wakeUpTime: this.state.wakeUpTime, 
-        difficultyFallingAsleep: this.state.difficultyFallingAsleep, 
-        difficultyStayingAsleep: this.state.difficultyStayingAsleep, 
-        wakeUpDifficulty: this.state.wakeUpDifficulty,
-        sleepQuality: this.state.sleepQuality
+        bedTime: this.state.todaysEntry.bedTime, 
+        wakeUpTime: this.state.todaysEntry.wakeUpTime, 
+        difficultyFallingAsleep: this.state.todaysEntry.difficultyFallingAsleep, 
+        difficultyStayingAsleep: this.state.todaysEntry.difficultyStayingAsleep, 
+        wakeUpDifficulty: this.state.todaysEntry.wakeUpDifficulty,
+        sleepQuality: this.state.todaysEntry.sleepQuality
      }
     //  await addFoodEntry(food)
     //   this.props.navigation.navigate('Food')
@@ -93,7 +93,15 @@ class SleepEntry extends React.Component {
     if (todaySleep.length > 0)
         this.setState({todaysEntry: todaySleep[0]})
     else
-        this.setState({todaysEntry: {}})
+        this.setState({todaysEntry: {
+            bedTime: '', 
+            difficultyFallingAsleep: false, 
+            difficultyStayingAsleep: false, 
+            wakeUpTime: '', 
+            wakeUpDifficulty: 0,
+            sleepQuality: 0,
+            energyLevel: 0,
+          }})
   }
 
   render() {

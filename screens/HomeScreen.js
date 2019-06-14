@@ -20,11 +20,15 @@ import moment from 'moment';
 import Colors from '../constants/Colors';
 import { MonoText } from '../components/StyledText';
 // import Card from '../components/Card'
+import { connect } from 'react-redux';
 
-export default class HomeScreen extends React.Component {
+import { listSleep } from '../redux/reducer';
+
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sleepHours: 0,
       painWeekData : {
         labels: [], // ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
@@ -65,6 +69,28 @@ export default class HomeScreen extends React.Component {
     
   };
 
+  componentDidMount() {
+    this.props.listSleep().then(s => this.filterSleep())//.then(c => console.log(this.state.todaysEntry))
+  }
+  componentDidUpdate(prevProps) {
+    // Requesting new data if route has changed.
+    if (prevProps.sleep !== this.props.sleep) {
+      this.filterSleep();
+    }
+  }
+  filterSleep() {
+    var today = moment();
+    var todaySleep = this.props.sleep.filter(f => f.dateTime >= today.startOf('day') && f.dateTime < today.endOf('day'))
+    if (todaySleep.length > 0) {
+      var sleep = todaySleep[0];
+      var timeStart = new Date("01/01/2007 " + sleep.bedTime).getUTCHours();
+      var timeEnd = new Date("01/01/2007 " + sleep.wakeUpTime).getUTCHours();
+      
+      var hourDiff = timeEnd - timeStart;  
+      this.setState({sleepHours: Math.abs(hourDiff)})
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -84,7 +110,7 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.subHeader2}>Hours Slept Last Night</Text>
               </CardItem>
               <CardItem style={{ alignSelf: "center", backgroundColor: Colors.darkGray }}>
-                <Text style={styles.largeText}>6</Text>
+                <Text style={styles.largeText}>{this.state.sleepHours}</Text>
               </CardItem>
             </Card>
           </View>
@@ -220,3 +246,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.black
   }
 });
+
+
+const mapStateToProps = state => {
+  return {
+    sleep: state.sleep
+  };
+};
+
+const mapDispatchToProps = {
+  listSleep
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
