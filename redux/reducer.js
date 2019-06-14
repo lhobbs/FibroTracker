@@ -70,6 +70,16 @@ export const SAVE_GENERALINFO_SUCCESS = 'fibrotracker/generalinfo/SAVE_ITEM_SUCC
 export const SAVE_GENERALINFO_FAIL = 'fibrotracker/generalinfo/SAVE_ITEM_FAIL';
 
 
+/*********   SYMPTOMS ACTION   **********/
+export const GET_SYMPTOMS = 'fibrotracker/symptoms/LOAD';
+export const GET_SYMPTOMS_SUCCESS = 'fibrotracker/symptoms/LOAD_SUCCESS';
+export const GET_SYMPTOMS_FAIL = 'fibrotracker/symptoms/LOAD_FAIL';
+
+export const SAVE_SYMPTOMS = 'fibrotracker/symptoms/SAVE_ITEM';
+export const SAVE_SYMPTOMS_SUCCESS = 'fibrotracker/symptoms/SAVE_ITEM_SUCCESS';
+export const SAVE_SYMPTOMS_FAIL = 'fibrotracker/symptoms/SAVE_ITEM_FAIL';
+
+
 export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [], painAreas: [], generalInfo: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
@@ -233,6 +243,29 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
         ...state,
         loading: false,
         error: 'Error while adding gen info entry'
+      };
+
+
+    case GET_SYMPTOMS:
+      return { ...state, loading: true };
+    case GET_SYMPTOMS_SUCCESS:
+      const symptoms = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, symptoms: symptoms };
+    case GET_SYMPTOMS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching symptoms'
+      };
+    case SAVE_SYMPTOMS:
+        return { ...state, loading: true };
+    case SAVE_SYMPTOMS_SUCCESS:
+      return { ...state, loading: false, symptoms: [...state.symptoms, action.payload.data] }
+    case SAVE_SYMPTOMS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding symptoms entry'
       };
     default:
       return state;
@@ -418,6 +451,32 @@ export const saveFoodSuccess = food => {
               request: {
                   url: '/addGeneralInfo',
                   data: info,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+
+  export function listSymptoms() {
+    return {
+      type: GET_SYMPTOMS,
+      payload: {
+        request: {
+          url: `/getSymptoms`
+        }
+      }
+    };
+  }
+  
+  export function saveSymptoms(symptoms) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_SYMPTOMS,
+          payload: {
+              request: {
+                  url: '/addSymptoms',
+                  data: symptoms,
                   method: 'POST'
               }
           }

@@ -14,7 +14,7 @@
     "splash": {
       "image": "./assets/images/fibrowarrior2.PNG",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#F4E2D6"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

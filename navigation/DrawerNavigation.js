@@ -15,6 +15,7 @@ import SleepEntry from '../screens/SleepEntry';
 import PainScale from '../screens/PainScale';
 import PainAreas from '../screens/PainAreas';
 import GeneralInfo from '../screens/GeneralInfo';
+import Symptoms from '../screens/Symptoms';
 import Menu from './DrawerMenu';
 
 var defaultNavOptions = {
@@ -57,6 +58,11 @@ const GeneralInfoStack = createStackNavigator({
   GeneralInfo
 })
 
+const SymptomsStack = createStackNavigator({
+  Symptoms
+})
+
+
 export default createDrawerNavigator({
   HomeStack,
   FoodStack,
@@ -65,7 +71,8 @@ export default createDrawerNavigator({
   SleepStack,
   PainScaleStack,
   PainAreasStack,
-  GeneralInfoStack
+  GeneralInfoStack,
+  SymptomsStack
 },
 { 
   contentComponent: Menu,
