@@ -75,6 +75,7 @@ class AppointmentEntry extends React.Component {
         style={styles.label}
         onChangeText={(note) => this.setState({note})}
         value={this.state.note}
+        multiline={true}
         placeholder="Notes"
         />
       </View>
@@ -85,7 +86,7 @@ class AppointmentEntry extends React.Component {
             minimumValue={0}
             maximumValue={3}
             step={1}
-            value={this.state.todaysEntry.midday}
+            value={this.state.rating}
             minimumTrackTintColor={Colors.pink}
             maximumTrackTintColor={Colors.lightPink2}
             onSlidingComplete={(rating) => this.setState({rating})}

@@ -283,9 +283,9 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
       return { ...state, loading: true };
     case GET_APPOINTMENTS_SUCCESS:
       const appointments = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
-      return { ...state, loading: false, appintments: appointments };
-    case GET_APPIONTMENTS_FAIL:
-      return {
+      return { ...state, loading: false, appointments: appointments };
+    case GET_APPOINTMENTS_FAIL:
+      return { 
         ...state,
         loading: false,
         error: 'Error while fetching appointment entries'
@@ -293,7 +293,7 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
     case SAVE_APPOINTMENT:
         return { ...state, loading: true };
     case SAVE_APPOINTMENT_SUCCESS:
-      return { ...state, loading: false, appintments: [...state.appointments, action.payload.data] }
+      return { ...state, loading: false, appointments: [...state.appointments, action.payload.data] }
     case SAVE_APPOINTMENT_FAIL:
       return {
         ...state,
@@ -535,7 +535,7 @@ export const saveFoodSuccess = food => {
           payload: {
               request: {
                   url: '/addAppointment',
-                  data: symptoms,
+                  data: apt,
                   method: 'POST'
               }
           }

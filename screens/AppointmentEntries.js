@@ -97,9 +97,13 @@ class AppointmentEntries extends React.Component {
   renderListItem(item) {
     return (
       <View style={styles.listItem}> 
-        <Text style={styles.label}>{item.name}</Text>
-        <Text style={styles.label}>{item.note}</Text>
-        <Text style={styles.label}>{item.rating}</Text>
+        <View style={styles.row}>
+            <Text style={styles.label}>{item.name}</Text>
+            <Text style={styles.label}> - {item.rating}</Text>
+        </View>
+        <View style={styles.row}>
+            <Text style={styles.time}>{item.note}</Text>
+        </View>
       </View>
     )
   }
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
       padding: 10,
       borderBottomWidth: 1,
       borderColor: '#d6d7da',
-      flexDirection: 'row'
+    //   flexDirection: 'row'
   },
   label: {
     fontSize: 20,

@@ -149,7 +149,7 @@ export default class HomeScreen extends React.Component {
           </ActionButton.Item> 
           <ActionButton.Item 
               buttonColor={Colors.darkGray}
-              onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
+              onPress={() => {this.props.navigation.navigate("AddAppointment")}}>
               <vIcon.MaterialCommunityIcons
                   name='stethoscope'
                   size={26}
