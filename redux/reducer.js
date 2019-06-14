@@ -80,6 +80,16 @@ export const SAVE_SYMPTOMS_SUCCESS = 'fibrotracker/symptoms/SAVE_ITEM_SUCCESS';
 export const SAVE_SYMPTOMS_FAIL = 'fibrotracker/symptoms/SAVE_ITEM_FAIL';
 
 
+/*********   APPOINTMENTS ACTION   **********/
+export const GET_APPOINTMENTS = 'fibrotracker/appointments/LOAD';
+export const GET_APPOINTMENTS_SUCCESS = 'fibrotracker/appointments/LOAD_SUCCESS';
+export const GET_APPOINTMENTS_FAIL = 'fibrotracker/appointments/LOAD_FAIL';
+
+export const SAVE_APPOINTMENT = 'fibrotracker/appointments/SAVE_ITEM';
+export const SAVE_APPOINTMENT_SUCCESS = 'fibrotracker/appointments/SAVE_ITEM_SUCCESS';
+export const SAVE_APPOINTMENT_FAIL = 'fibrotracker/appointments/SAVE_ITEM_FAIL';
+
+
 export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [], painAreas: [], generalInfo: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
@@ -266,6 +276,29 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
         ...state,
         loading: false,
         error: 'Error while adding symptoms entry'
+      };
+
+
+    case GET_APPOINTMENTS:
+      return { ...state, loading: true };
+    case GET_APPOINTMENTS_SUCCESS:
+      const appointments = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, appintments: appointments };
+    case GET_APPIONTMENTS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching appointment entries'
+      };
+    case SAVE_APPOINTMENT:
+        return { ...state, loading: true };
+    case SAVE_APPOINTMENT_SUCCESS:
+      return { ...state, loading: false, appintments: [...state.appointments, action.payload.data] }
+    case SAVE_APPOINTMENT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding appintment entry'
       };
     default:
       return state;
@@ -476,6 +509,32 @@ export const saveFoodSuccess = food => {
           payload: {
               request: {
                   url: '/addSymptoms',
+                  data: symptoms,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+
+  export function listAppointments() {
+    return {
+      type: GET_APPOINTMENTS,
+      payload: {
+        request: {
+          url: `/getAppointments`
+        }
+      }
+    };
+  }
+  
+  export function saveAppointment(apt) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_APPOINTMENT,
+          payload: {
+              request: {
+                  url: '/addAppointment',
                   data: symptoms,
                   method: 'POST'
               }

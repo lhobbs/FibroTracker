@@ -73,6 +73,12 @@ class Menu extends Component {
               Sleep
             </Text>
           </TouchableHighlight>
+
+          <TouchableHighlight onPress={() => this.props.navigation.navigate('Appointments')}>
+            <Text style={styles.listItem}>
+              Appointments
+            </Text>
+          </TouchableHighlight>
       </View>
     );
   }

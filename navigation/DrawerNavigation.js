@@ -16,6 +16,8 @@ import PainScale from '../screens/PainScale';
 import PainAreas from '../screens/PainAreas';
 import GeneralInfo from '../screens/GeneralInfo';
 import Symptoms from '../screens/Symptoms';
+import AppointmentEntry from '../screens/AppointmentEntry';
+import AppointmentEntries from '../screens/AppointmentEntries';
 import Menu from './DrawerMenu';
 
 var defaultNavOptions = {
@@ -62,6 +64,10 @@ const SymptomsStack = createStackNavigator({
   Symptoms
 })
 
+const AppointmentStack = createStackNavigator({
+  Appointments: AppointmentEntries,
+  AddAppointment: AppointmentEntry
+})
 
 export default createDrawerNavigator({
   HomeStack,
@@ -72,7 +78,8 @@ export default createDrawerNavigator({
   PainScaleStack,
   PainAreasStack,
   GeneralInfoStack,
-  SymptomsStack
+  SymptomsStack,
+  AppointmentStack
 },
 { 
   contentComponent: Menu,
