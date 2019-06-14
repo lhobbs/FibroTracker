@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, Picker, TouchableHighlight } from 'react-native';
+import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, Picker, TouchableHighlight, Slider } from 'react-native';
 import { Icon } from 'expo';
-import Slider from '@react-native-community/slider';
+// import Slider from '@react-native-community/slider';
 // import Picker from 'react-native-roll-picker'
 import Colors from '../constants/Colors';
 import moment from 'moment';
@@ -41,7 +41,7 @@ class PainScale extends React.Component {
 
   componentDidMount() {
     this._setNavigationParams()
-    this.props.listSleep().then(s => this.filterSleep())//.then(c => console.log(this.state.todaysEntry))
+    this.props.listPain().then(s => this.filterPain())//.then(c => console.log(this.state.todaysEntry))
  }
 
  _setNavigationParams() {
@@ -64,10 +64,10 @@ class PainScale extends React.Component {
 
   async _savePainScale() {
       const pain = { 
-        morning: this.state.morning, 
-        midday: this.state.midday, 
-        endday: this.state.endday, 
-        night: this.state.night
+        morning: this.state.todaysEntry.morning, 
+        midday: this.state.todaysEntry.midday, 
+        endday: this.state.todaysEntry.endday, 
+        night: this.state.todaysEntry.night
      }
     this.props.savePain(pain);
   }
@@ -81,6 +81,8 @@ class PainScale extends React.Component {
     var todayPain = this.props.pain.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
     if (todayPain.length > 0)
         this.setState({todaysEntry: todayPain[0]})
+    else
+        this.setState({todaysEntry: {}})
   }
 
   render() {
@@ -102,9 +104,10 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.morning}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                onValueChange={(pain) => this.setState(state => ({
+                maximumTrackTintColor={Colors.lightPink2}
+                onSlidingComplete={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
                         morning: pain
@@ -119,9 +122,10 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.midday}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                onValueChange={(pain) => this.setState(state => ({
+                maximumTrackTintColor={Colors.lightPink2}
+                onSlidingComplete={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
                         midday: pain
@@ -136,9 +140,10 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.endday}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                onValueChange={(pain) => this.setState(state => ({
+                maximumTrackTintColor={Colors.lightPink2}
+                onSlidingComplete={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
                         endday: pain
@@ -153,9 +158,10 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.night}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-                onValueChange={(pain) => this.setState(state => ({
+                maximumTrackTintColor={Colors.lightPink2}
+                onSlidingComplete={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
                         night: pain

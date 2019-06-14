@@ -92,6 +92,8 @@ class SleepEntry extends React.Component {
     var todaySleep = this.props.sleep.filter(f => f.dateTime >= this.state.date.startOf('day') && f.dateTime < this.state.date.endOf('day'))
     if (todaySleep.length > 0)
         this.setState({todaysEntry: todaySleep[0]})
+    else
+        this.setState({todaysEntry: {}})
   }
 
   render() {

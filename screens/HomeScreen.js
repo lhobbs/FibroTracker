@@ -138,23 +138,23 @@ export default class HomeScreen extends React.Component {
               />
           </ActionButton.Item>
           <ActionButton.Item 
-              buttonColor='#FFF'
+              buttonColor={Colors.darkGray}
               onPress={() => {this.props.navigation.navigate("AddActivity")}}>
               <vIcon.MaterialCommunityIcons
                   name='run'
                   size={26}
                   style={{ marginBottom: -3 }}
-                  color={Colors.teal}
+                  color={Colors.lightTeal}
               />
           </ActionButton.Item> 
           <ActionButton.Item 
-              buttonColor='#FFF'
+              buttonColor={Colors.darkGray}
               onPress={() => {this.props.navigation.navigate("LinksScreen")}}>
               <vIcon.MaterialCommunityIcons
                   name='stethoscope'
                   size={26}
                   style={{ marginBottom: -3 }}
-                  color={Colors.teal}
+                  color={Colors.lightTeal}
               />
           </ActionButton.Item>
         </ActionButton>

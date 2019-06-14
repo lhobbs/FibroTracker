@@ -60,7 +60,17 @@ export const SAVE_PAINAREAS_SUCCESS = 'fibrotracker/painareas/SAVE_ITEM_SUCCESS'
 export const SAVE_PAINAREAS_FAIL = 'fibrotracker/painareas/SAVE_ITEM_FAIL';
 
 
-export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [] }, action) {
+/*********   GENERAL INFO ACTION   **********/
+export const GET_GENERALINFO = 'fibrotracker/generalinfo/LOAD';
+export const GET_GENERALINFO_SUCCESS = 'fibrotracker/generalinfo/LOAD_SUCCESS';
+export const GET_GENERALINFO_FAIL = 'fibrotracker/generalinfo/LOAD_FAIL';
+
+export const SAVE_GENERALINFO = 'fibrotracker/generalinfo/SAVE_ITEM';
+export const SAVE_GENERALINFO_SUCCESS = 'fibrotracker/generalinfo/SAVE_ITEM_SUCCESS';
+export const SAVE_GENERALINFO_FAIL = 'fibrotracker/generalinfo/SAVE_ITEM_FAIL';
+
+
+export default function reducer(state = { food: [], meds: [], activities: [], sleep: [], pain: [], painAreas: [], generalInfo: [] }, action) {
   switch (action.type) {
     case GET_FOOD:
       return { ...state, loading: true };
@@ -161,8 +171,8 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
     case GET_PAIN:
       return { ...state, loading: true };
     case GET_PAIN_SUCCESS:
-      const pain = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
-      return { ...state, loading: false, pain: pain };
+      const painScale = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, pain: painScale };
     case GET_PAIN_FAIL:
       return {
         ...state,
@@ -183,8 +193,8 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
     case GET_PAINAREAS:
       return { ...state, loading: true };
     case GET_PAINAREAS_SUCCESS:
-      const pain = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
-      return { ...state, loading: false, painAreas: pain };
+      const painAreas = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, painAreas: painAreas };
     case GET_PAINAREAS_FAIL:
       return {
         ...state,
@@ -200,6 +210,29 @@ export default function reducer(state = { food: [], meds: [], activities: [], sl
         ...state,
         loading: false,
         error: 'Error while adding pain area entry'
+      };
+
+
+    case GET_GENERALINFO:
+      return { ...state, loading: true };
+    case GET_GENERALINFO_SUCCESS:
+      const genInfo = Object.keys(action.payload.data).map(k => ({ key: k, ...action.payload.data[k] }))
+      return { ...state, loading: false, generalInfo: genInfo };
+    case GET_GENERALINFO_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while fetching general info'
+      };
+    case SAVE_GENERALINFO:
+        return { ...state, loading: true };
+    case SAVE_GENERALINFO_SUCCESS:
+      return { ...state, loading: false, generalInfo: [...state.generalInfo, action.payload.data] }
+    case SAVE_GENERALINFO_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while adding gen info entry'
       };
     default:
       return state;
@@ -321,19 +354,19 @@ export const saveFoodSuccess = food => {
       type: GET_PAIN,
       payload: {
         request: {
-          url: `/getPain`
+          url: `/getPainScale`
         }
       }
     };
   }
   
   export function savePain(pain) {
-    // console.log('reduce', activity)
+    console.log('reduce', pain)
       return {
           type: SAVE_PAIN,
           payload: {
               request: {
-                  url: '/addPain',
+                  url: '/addPainScale',
                   data: pain,
                   method: 'POST'
               }
@@ -360,6 +393,31 @@ export const saveFoodSuccess = food => {
               request: {
                   url: '/addPainAreas',
                   data: pain,
+                  method: 'POST'
+              }
+          }
+      }
+  }
+
+  export function listGeneralInfo(date) {
+    return {
+      type: GET_GENERALINFO,
+      payload: {
+        request: {
+          url: `/getGeneralInfo`
+        }
+      }
+    };
+  }
+  
+  export function saveGeneralInfo(info) {
+    // console.log('reduce', activity)
+      return {
+          type: SAVE_GENERALINFO,
+          payload: {
+              request: {
+                  url: '/addGeneralInfo',
+                  data: info,
                   method: 'POST'
               }
           }

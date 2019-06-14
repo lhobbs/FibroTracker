@@ -1,14 +1,14 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, Picker, TouchableHighlight } from 'react-native';
+import { ScrollView, StyleSheet, TextInput, Text, Switch, View, Button, Alert, Picker, TouchableHighlight, Slider } from 'react-native';
 import { Icon } from 'expo';
-import Slider from '@react-native-community/slider';
+// import Slider from '@react-native-community/slider';
 import Colors from '../constants/Colors';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
 import { savePainAreas, listPainAreas } from '../redux/reducer';
 
-class PainScale extends React.Component {
+class PainAreas extends React.Component {
     constructor(props) {
         super(props);
         // console.log(props)
@@ -45,7 +45,7 @@ class PainScale extends React.Component {
 
   componentDidMount() {
     this._setNavigationParams()
-    this.props.listSleep().then(s => this.filterSleep())//.then(c => console.log(this.state.todaysEntry))
+    this.props.listPainAreas().then(s => this.filterPain())//.then(c => console.log(this.state.todaysEntry))
  }
 
  _setNavigationParams() {
@@ -68,15 +68,15 @@ class PainScale extends React.Component {
 
   async _savePainAreas() {
       const pain = { 
-        head: this.state.head, 
-        headDescription: this.state.headDescription,
-        jaw: this.state.jaw,
-        neck: this.state.neck,
-        shoulders: this.state.shoulders,
-        back: this.state.back,
-        extremities: this.state.extremities,
-        extremitiesDescription: this.state.extremitiesDescription,
-        touchyPain: this.state.touchyPain
+        head: this.state.todaysEntry.head, 
+        headDescription: this.state.todaysEntry.headDescription,
+        jaw: this.state.todaysEntry.jaw,
+        neck: this.state.todaysEntry.neck,
+        shoulders: this.state.todaysEntry.shoulders,
+        back: this.state.todaysEntry.back,
+        extremities: this.state.todaysEntry.extremities,
+        extremitiesDescription: this.state.todaysEntry.extremitiesDescription,
+        touchyPain: this.state.todaysEntry.touchyPain
      }
     this.props.savePainAreas(pain);
   }
@@ -92,6 +92,8 @@ class PainScale extends React.Component {
     // there should be one entry per day, but prevent error if array is empty
     if (todayPain.length > 0)
         this.setState({todaysEntry: todayPain[0]})
+    else
+        this.setState({todaysEntry: {}})
   }
 
   render() {
@@ -113,8 +115,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.head}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -132,7 +135,7 @@ class PainScale extends React.Component {
                         headDescription: pain
                     }
                 }))}
-                value={this.state.food}
+                value={this.state.todaysEntry.headDescription}
                 placeholder="Headache type"
             />
         </View>
@@ -143,8 +146,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.jaw}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -160,8 +164,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.neck}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -177,8 +182,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.shoulders}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -194,8 +200,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.back}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -211,8 +218,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.touchyPain}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -228,8 +236,9 @@ class PainScale extends React.Component {
                 minimumValue={0}
                 maximumValue={3}
                 step={1}
+                value={this.state.todaysEntry.extremities}
                 minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                maximumTrackTintColor={Colors.lightPink2}
                 onValueChange={(pain) => this.setState(state => ({
                     todaysEntry: {
                         ...state.todaysEntry,
@@ -247,7 +256,7 @@ class PainScale extends React.Component {
                         extremitiesDescription: pain
                     }
                 }))}
-                value={this.state.food}
+                value={this.state.todaysEntry.extremitiesDescription}
                 placeholder="Extremities description"
             />
          </View>
