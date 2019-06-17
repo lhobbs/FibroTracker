@@ -1,7 +1,7 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+// import MainTabNavigator from './MainTabNavigator';
 import DrawerNavigation from './DrawerNavigation';
 
 export default createAppContainer(
@@ -11,6 +11,6 @@ export default createAppContainer(
 //   Main: MainTabNavigator,
 // })
 // createDrawerNavigator( DrawerNavigation ) 
-// MainTabNavigator
+// MainTabNavigator 
 DrawerNavigation
 ); 

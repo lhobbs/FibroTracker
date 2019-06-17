@@ -16,10 +16,10 @@ class PainScale extends React.Component {
         this.state = { 
           date: moment(),
           todaysEntry: {
-            morning: 0, 
-            midday: 0,
-            endday: 0,
-            night: 0,
+            morning: null, 
+            midday: null,
+            endday: null,
+            night: null,
           }
         };
     }

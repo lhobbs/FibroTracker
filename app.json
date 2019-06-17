@@ -10,9 +10,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/butterfly.png",
+    "icon": "./assets/images/butterfly2.png",
     "splash": {
-      "image": "./assets/images/fibrowarrior2.PNG",
+      "image": "./assets/images/fibrowarrior4.png",
       "resizeMode": "contain",
       "backgroundColor": "#F4E2D6"
     },

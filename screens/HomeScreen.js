@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
       painWeekData : {
         labels: [], // ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
-          data: [ 1,2,3,0,1,2,3 ],
+          data: [ 0, 0, 0, 0, 0, 0, 0 ],
           color: (opacity = 1) => Colors.pink,//`rgba(134, 65, 244, ${opacity})`, // optional
           strokeWidth: 2 // optional
         }
@@ -108,8 +108,16 @@ class HomeScreen extends React.Component {
       // console.log(day.format("L"), i)
       if (dayPain[0]) {
         dayPain = dayPain[0]
-        var dayTotal = (dayPain.morning + dayPain.midday + dayPain.endday + dayPain.night)
-        var pain = dayTotal/4;
+        var dayTotal = 0;
+        var num = 0;
+        Object.keys(dayPain).map(p => {
+          if (p != null){
+            dayTotal + p;
+            num++
+          }
+        })
+        //var dayTotal = (dayPain.morning + dayPain.midday + dayPain.endday + dayPain.night)
+        var pain = dayTotal/(num > 0 ? num : 1);
         weekPain.push(pain)
       }
       else
